@@ -1,9 +1,10 @@
+const empty = () => void 0;
 export default class Record {
   constructor(custom) {
     for (const key in custom) {
       Object.defineProperty(this, key, {
         get() { return custom[key]; },
-        set() { return null; },
+        set: empty
       });
     }
 
