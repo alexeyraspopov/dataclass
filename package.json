@@ -1,0 +1,8 @@
+{
+  "name": "dataclass",
+  "version": "0.0.0",
+  "description": "Immutable data transfer objects for JavaScript",
+  "main": "index.js",
+  "types": "typings/dataclass.d.ts",
+  "repository": "alexeyraspopov/dataclass"
+}
