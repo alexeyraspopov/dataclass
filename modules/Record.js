@@ -8,7 +8,7 @@ export default class Record {
     }
   }
 
-  merge(patch) {
+  copy(patch) {
     const values = Object.assign({}, this, patch);
     return new this.constructor(values);
   }

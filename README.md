@@ -5,7 +5,7 @@ class User extends Record {
 }
 
 const user = new User({ name: 'Liza', age: 23 });
-const updated = user.merge({ name: 'Ann' });
+const updated = user.copy({ name: 'Ann' });
 
 user.equals(updated); // false
 ```
