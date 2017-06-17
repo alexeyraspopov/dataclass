@@ -1,9 +1,24 @@
+const guard = Symbol('I need empty record');
 const empty = () => void 0;
+
 export default class Record {
   constructor(custom) {
-    for (const key in custom) {
+    if (custom === guard) return this;
+
+    if (!this.constructor.defaults) {
+      this.constructor.defaults = new this.constructor(guard);
+    }
+
+    const defaults = this.constructor.defaults;
+
+    for (const key in defaults) {
       Object.defineProperty(this, key, {
-        get() { return custom[key]; },
+        enumerable: true,
+        get: ((key) => {
+          return key in custom
+            ? () => custom[key]
+            : () => defaults[key]
+        })(key),
         set: empty
       });
     }
