@@ -6,17 +6,26 @@ export default class Record {
         set() { return null; },
       });
     }
+
+    Object.defineProperty(this, '@@values', {
+      enumerable: false,
+      get() { return custom }
+    });
   }
 
   copy(patch) {
-    const values = Object.assign({}, this, patch);
+    const values = Object.assign({}, this['@@values'], patch);
     return new this.constructor(values);
   }
 
   equals(record) {
-    for (const key in this) {
-      if (this[key] !== record[key]) return false;
+    const a = this['@@values'];
+    const b = record['@@values'];
+
+    for (const key in a) {
+      if (a[key] !== b[key]) return false;
     }
+
     return true;
   }
 }
