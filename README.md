@@ -13,9 +13,9 @@ user.equals(updated); // false
 Compare it to Scala:
 
 ```scala
-case class User(name: String, age: Int)
+case class User(name: String = "Anonymous", age: Int = 0)
 
-val user = User("Liza", 23)
+val user = User(name = "Liza", age = 23)
 val updated = user.copy(name = "Ann")
 
 user.equals(update)
