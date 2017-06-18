@@ -1,4 +1,5 @@
-const guard = Symbol('I need empty record');
+const guard = Symbol('EmptyRecord');
+const values = Symbol('CustomValues');
 const empty = () => void 0;
 
 export default class Record {
@@ -23,20 +24,20 @@ export default class Record {
       });
     }
 
-    Object.defineProperty(this, '@@values', {
+    Object.defineProperty(this, values, {
       enumerable: false,
       get() { return custom }
     });
   }
 
   copy(patch) {
-    const values = Object.assign({}, this['@@values'], patch);
+    const values = Object.assign({}, this[values], patch);
     return new this.constructor(values);
   }
 
   equals(record) {
-    const a = this['@@values'];
-    const b = record['@@values'];
+    const a = this[values];
+    const b = record[values];
 
     for (const key in a) {
       if (a[key] !== b[key]) return false;
