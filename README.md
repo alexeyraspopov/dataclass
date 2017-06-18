@@ -1,3 +1,7 @@
+## Syntax sugar for your data structures leveraging the power of type systems in JavaScript and TypeScript
+
+Here is how it can be done in JavaScript (class properties + flowtype) or TypeScript:
+
 ```javascript
 class User extends Record {
   name: string = 'Anonymous';
