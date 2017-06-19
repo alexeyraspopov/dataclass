@@ -1,0 +1,6 @@
+{
+  "name": "dataclass-flowtype-example",
+  "devDependencies": {
+    "flow-bin": "~0.48.0"
+  }
+}
