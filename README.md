@@ -35,3 +35,45 @@ val updated = user.copy(name = "Ann")
 
 user.equals(update)
 ```
+
+Without non-standardized JavaScript features:
+
+```javascript
+class User extends Record {
+  constructor(data) {
+    super(data);
+    this.name = 'Anonymous';
+    this.age = 0;
+  }
+}
+```
+
+And with some getters:
+
+```javascript
+class User extends Record {
+  name: string = 'Anonymous';
+  age: number = 0;
+
+  isAdult() {
+    return this.age >= 18;
+  }
+}
+```
+
+If you need data preparation, provide JS-agnostic API:
+
+```javascript
+class User extends Record {
+  name: string = 'Anonymous';
+  age: number = 0;
+
+  static from(data: Object): User {
+    const name: string = data.name;
+    const age: number = parseInt(data.age, 10);
+    return new User({ name, age });
+  }
+}
+
+const user = User.from({ name: 'Liza', age: '18' });
+```
