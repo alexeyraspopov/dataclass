@@ -3,7 +3,7 @@ const values = Symbol('CustomValues');
 const empty = () => void 0;
 
 export default class Record {
-  constructor(custom) {
+  constructor(custom = {}) {
     if (custom === guard) return this;
 
     if (!this.constructor.defaults) {
