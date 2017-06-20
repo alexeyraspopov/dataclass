@@ -13,13 +13,13 @@ export default class Record {
     const defaults = this.constructor.defaults;
 
     for (const key in defaults) {
+      const getter = key in custom
+        ? () => custom[key]
+        : () => defaults[key];
+
       Object.defineProperty(this, key, {
         enumerable: true,
-        get: ((key) => {
-          return key in custom
-            ? () => custom[key]
-            : () => defaults[key]
-        })(key),
+        get: getter,
         set: empty
       });
     }
