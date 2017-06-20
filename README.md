@@ -77,3 +77,17 @@ class User extends Record {
 
 const user = User.from({ name: 'Liza', age: '18' });
 ```
+
+Whenever you need to serialize data class, just use JS-agnostic API:
+
+```javascript
+class User extends Record {
+  name: string = 'Anonymous';
+  age: number = 0;
+
+  toJSON() {
+    return { name: this.name,
+             age: this.age };
+  }
+}
+```
