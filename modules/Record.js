@@ -44,7 +44,7 @@ export default class Record {
     const a = this[values];
     const b = record[values];
 
-    for (const key in a) {
+    for (const key in this.constructor[defaults]) {
       if (a[key] !== b[key]) return false;
     }
 

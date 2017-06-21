@@ -39,6 +39,14 @@ describe('Record', () => {
   });
 
   it('should compare custom values for two entities of the same type', () => {
+    const entity = new Entity({ someBool: false });
+    const equal = new Entity({ someBool: false });
+    const updated = entity.copy({ someNum: 14 });
 
+    expect(entity.equals(updated))
+      .toBe(false);
+
+    expect(entity.equals(equal))
+      .toBe(true);
   });
 });
