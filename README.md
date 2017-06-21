@@ -24,6 +24,8 @@ class User extends Record<User> {
 }
 ```
 
+`Record` is generic in TypeScript's typings due to https://github.com/Microsoft/TypeScript/issues/5863.
+
 API is fully compatible, so the code looks the same in JS and TS:
 
 ```javascript
@@ -97,18 +99,17 @@ Compare it to Scala:
 
 ```scala
 case class User(name: String = "Anonymous", age: Int = 0)
-
-val user = User(name = "Liza", age = 23)
-val updated = user.copy(name = "Ann")
-
-user.equals(update)
 ```
 
 And Kotlin:
 
 ```kotlin
 data class User(val name: String = "Anonymous", val age: Int = 0)
+```
 
+Both Scala and Kotlin share the same compatible API:
+
+```scala
 val user = User(name = "Liza", age = 23)
 val updated = user.copy(name = "Ann")
 
