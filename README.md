@@ -1,6 +1,12 @@
 ## Syntax sugar for your data structures leveraging the power of type systems in JavaScript and TypeScript
 
-Here is how it can be done in JavaScript (using [class properties](https://github.com/tc39/proposal-class-fields) and [flowtype](https://flow.org)) or TypeScript (code is fully compatible):
+To provide an effortless way to define data structures for domain models and data transfer objects that are immutable and persistent.
+
+    npm install dataclass
+
+### Data Class
+
+Here is how it can be done in JavaScript (using [class properties](https://github.com/tc39/proposal-class-fields) and [flowtype](https://flow.org)):
 
 ```javascript
 class User extends Record {
