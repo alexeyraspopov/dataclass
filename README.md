@@ -13,33 +13,24 @@ class User extends Record {
   name: string = 'Anonymous';
   age: number = 0;
 }
+```
 
+Or TypeScript:
+
+```typescript
+class User extends Record<User> {
+  name: string = 'Anonymous';
+  age: number = 0;
+}
+```
+
+API is fully compatible, so the code looks the same in JS and TS:
+
+```javascript
 const user = new User({ name: 'Liza', age: 23 });
 const updated = user.copy({ name: 'Ann' });
 
 user.equals(updated);
-```
-
-Compare it to Scala:
-
-```scala
-case class User(name: String = "Anonymous", age: Int = 0)
-
-val user = User(name = "Liza", age = 23)
-val updated = user.copy(name = "Ann")
-
-user.equals(update)
-```
-
-And Kotlin:
-
-```kotlin
-data class User(val name: String = "Anonymous", val age: Int = 0)
-
-val user = User(name = "Liza", age = 23)
-val updated = user.copy(name = "Ann")
-
-user.equals(update)
 ```
 
 Without non-standardized JavaScript features:
@@ -67,6 +58,8 @@ class User extends Record {
 }
 ```
 
+### Serialization & Deserialization
+
 If you need data preparation, provide JS-agnostic API:
 
 ```javascript
@@ -91,9 +84,33 @@ class User extends Record {
   name: string = 'Anonymous';
   age: number = 0;
 
-  toJSON() {
+  toJSON(): Object {
     return { name: this.name,
              age: this.age };
   }
 }
+```
+
+### Inspiration
+
+Compare it to Scala:
+
+```scala
+case class User(name: String = "Anonymous", age: Int = 0)
+
+val user = User(name = "Liza", age = 23)
+val updated = user.copy(name = "Ann")
+
+user.equals(update)
+```
+
+And Kotlin:
+
+```kotlin
+data class User(val name: String = "Anonymous", val age: Int = 0)
+
+val user = User(name = "Liza", age = 23)
+val updated = user.copy(name = "Ann")
+
+user.equals(update)
 ```
