@@ -36,8 +36,8 @@ export default class Record {
   }
 
   copy(patch) {
-    const values = Object.assign({}, this[values], patch);
-    return new this.constructor(values);
+    const custom = Object.assign({}, this[values], patch);
+    return new this.constructor(custom);
   }
 
   equals(record) {
