@@ -1,21 +1,26 @@
 const guard = Symbol('EmptyRecord');
 const values = Symbol('CustomValues');
+const defaults = Symbol('DefaultValues');
 const empty = () => void 0;
 
 export default class Record {
   constructor(custom = {}) {
     if (custom === guard) return this;
 
-    if (!this.constructor.defaults) {
-      this.constructor.defaults = new this.constructor(guard);
+    if (!this.constructor[defaults]) {
+      const emptyRecord = new this.constructor(guard);
+      Object.defineProperty(this.constructor, defaults, {
+        enumerable: false,
+        get() { return emptyRecord }
+      });
     }
 
-    const defaults = this.constructor.defaults;
+    const base = this.constructor[defaults];
 
-    for (const key in defaults) {
+    for (const key in base) {
       const getter = key in custom
         ? () => custom[key]
-        : () => defaults[key];
+        : () => base[key];
 
       Object.defineProperty(this, key, {
         enumerable: true,
