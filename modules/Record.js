@@ -11,7 +11,7 @@ export default class Record {
       const emptyRecord = new this.constructor(guard);
       Object.defineProperty(this.constructor, defaults, {
         enumerable: false,
-        get() { return emptyRecord }
+        get: () => emptyRecord
       });
     }
 
@@ -31,7 +31,7 @@ export default class Record {
 
     Object.defineProperty(this, values, {
       enumerable: false,
-      get() { return custom }
+      get: () => custom
     });
   }
 
