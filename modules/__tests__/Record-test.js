@@ -58,4 +58,20 @@ describe('Record', () => {
     expect(JSON.stringify(entity))
       .toBe(JSON.stringify(raw));
   });
+
+  it('should support iterables', () => {
+    const entity = new Entity({ someBool: false });
+
+    expect(Object.entries(entity))
+      .toEqual([['someString', 'default string'],
+                ['someNum', 0.134],
+                ['someBool', false],
+                ['someNullable', null]]);
+
+    expect(Object.keys(entity))
+      .toEqual(['someString', 'someNum', 'someBool', 'someNullable']);
+
+    expect(Object.values(entity))
+      .toEqual(['default string', 0.134, false, null]);
+  });
 });
