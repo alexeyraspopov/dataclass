@@ -74,4 +74,13 @@ describe('Record', () => {
     expect(Object.values(entity))
       .toEqual(['default string', 0.134, false, null]);
   });
+
+  it('should not allow assignment', () => {
+    const entity = new Entity({ someBool: false });
+
+    entity.someBool = null;
+
+    expect(entity.someBool)
+      .toBe(false);
+  });
 });
