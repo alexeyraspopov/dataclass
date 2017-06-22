@@ -3,5 +3,6 @@ declare module 'dataclass' {
     constructor(custom: ?$Shape<this>): this;
     copy(patch: $Shape<this>): this;
     equals(record: this): boolean;
+    toJSON(): Object;
   }
 }

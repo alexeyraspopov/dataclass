@@ -12,7 +12,7 @@ This library provides an abstract class `Record`:
 import Record from 'dataclass';
 ```
 
-Which allows to define custom data classes with their set of fields. Usuming, the user is aware of type systems and have one enabled for their project, this library does not do any type checks in runtime. This means less overhead for the things, that have to be preserved in compile time or by a safety net of tests.
+Which allows to define custom data classes with their set of fields. Assuming, the user is aware of type systems and have one enabled for their project, this library does not do any type checks in runtime. This means less overhead for the things, that have to be preserved in compile time or by a safety net of tests.
 
 The peak of developer experience can be achieved by writing JavaScript that is extended by [class properties](https://github.com/tc39/proposal-class-fields) and [flowtype](https://flow.org). This allows to write a class with a set of fields following by their types and default values:
 
@@ -153,6 +153,8 @@ const user = new User({ name: 'Liza', age: 23 });
 JSON.stringify(user);
 // > { "name": "Liza", "age": 23 }
 ```
+
+By default, a model will be serialized to a plain object with all the fields as is.
 
 ### Inspiration
 

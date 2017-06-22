@@ -50,4 +50,8 @@ export default class Record {
 
     return true;
   }
+
+  toJSON() {
+    return Object.assign({}, this.constructor[defaults], this[values]);
+  }
 }
