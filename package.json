@@ -1,6 +1,6 @@
 {
   "name": "dataclass",
-  "version": "0.0.0",
+  "version": "1.0.0-rc.1",
   "description": "Immutable data transfer objects for JavaScript",
   "main": "dataclass.js",
   "module": "modules/Record.js",
