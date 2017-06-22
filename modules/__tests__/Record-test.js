@@ -55,9 +55,6 @@ describe('Record', () => {
     const raw = { someString: 'default string', someNum: 0.134,
                   someBool: false, someNullable: null };
 
-    expect(entity.toJSON())
-      .toEqual(raw);
-
     expect(JSON.stringify(entity))
       .toBe(JSON.stringify(raw));
   });

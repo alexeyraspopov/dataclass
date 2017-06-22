@@ -4,6 +4,5 @@ declare module 'dataclass' {
     constructor(custom?: Partial<T>);
     copy(patch: Partial<T>): T;
     equals(record: T): boolean;
-    toJSON(): Object;
   }
 }
