@@ -3,7 +3,6 @@
   "version": "1.0.0-rc.2",
   "description": "Immutable data transfer objects for JavaScript",
   "main": "dataclass.js",
-  "module": "modules/Record.js",
   "types": "typings/dataclass.d.ts",
   "repository": "alexeyraspopov/dataclass",
   "devDependencies": {

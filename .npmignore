@@ -2,5 +2,4 @@
 !package.json
 !README.md
 !typings/*
-!modules/Record.js
 !dataclass.js
