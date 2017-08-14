@@ -1,6 +1,14 @@
-## Syntax sugar for data structures leveraging the power of type systems in JavaScript and TypeScript.
+## Syntax sugar for data structures leveraging the power of type systems in JavaScript and TypeScript
 
 To provide an effortless way to define data structures for domain models and data transfer objects that are immutable and persistent.
+
+ * [Getting Started][#getting-started]
+ * [API Reference][#api-reference]
+ * [Serialization & Deserialization][#serialization--deserialization]
+ * [Inspiration][#inspiration]
+ * [Contributing][#contributing]
+
+## Getting Started
 
 ```bash
 npm install dataclass
@@ -113,7 +121,115 @@ class User extends Record {
 
 Getters may receive arguments, however it is recommended to keep them primitive, so a model [won't know](https://en.wikipedia.org/wiki/Law_of_Demeter) about some others' internals.
 
-### Serialization & Deserialization
+## API Reference
+
+### `Record`
+
+Base class for domain models. Should be extended with a set of class fields that describe the shape of desired model.
+
+#### Example
+
+```javascript
+class Project extends Record {
+  id: string = '';
+  name: string = 'Untitled Project';
+  createdBy: string = '';
+  createdAt: Date = null;
+}
+```
+
+### `constructor(data)`
+
+Once extended, data class can be instantiated with a new data. That's the way to get a unique immutable persistent model.
+
+#### Arguments
+
+ 1. `data` (_Object_): POJO which shape satisfy the contract described during class extension. If you use [Flow](https://flow.org), it will warn you about the mistakes.
+
+#### Returns
+
+(_Record_): an instance of your data class with all the defined fields accessible as in the plain object. Properties are read only.
+
+#### Example
+
+```javascript
+class Vehicle extends Record {
+  model: string = '';
+  manufacturer: string = '';
+}
+
+const vehicle = new Vehicle({ manufacturer: 'Tesla', model: 'S' });
+// > Vehicle { manufacturer: 'Tesla', model: 'S' }
+
+vehicle.manufacturer
+// > 'Tesla'
+```
+
+### `copy(patch)`
+
+Create new immutable instance based on an existent one. Since properties are read only, that's the way to provide an updated model's fields to a consumer keeping the rest unchanged.
+
+#### Arguments
+
+ 1. `patch` (_Record_): POJO that includes new values that you want to change. Properties should satisfy the contract described by the class.
+
+#### Returns
+
+(_Record_): new instance of the same type and with new values.
+
+#### Example
+
+```javascript
+class User extends Record {
+  name: string = 'Anonymous';
+  email: string = 'email@example.com';
+}
+
+const user = new User({ name: 'Liza' });
+// > User { name: 'Liza', email: 'email@example.com' }
+
+const updated = user.copy({ email: 'liza@example.com' });
+// > User { name: 'Liza', email: 'liza@example.com' }
+```
+
+### `equals(record)`
+
+Since immutable instances always have not equal references, there should be a way to compare the actual values.
+
+#### Arguments
+
+ 1. `record` (_Object_): a record of the same type as a target one.
+
+#### Returns
+
+(_Boolean_): `false` if some field value is not equal in both records. `true` otherwise.
+
+#### Example
+
+```javascript
+class Box extends Record {
+  size: number = 16;
+  color: string = 'red';
+}
+
+const first = new Box({ color: 'green' });
+const second = new Box({ color: 'blue' });
+const third = first.copy({ color: 'blue' });
+
+first === second;
+// > false
+
+first === third;
+// > false
+
+first.equals(second);
+// > false
+
+second.equals(third);
+// > true
+```
+
+## Serialization & Deserialization
 
 In cases where the input data cannot be determined (API requests) or there should be some additional data preparation done, it is recommended to provide custom and agnostic static methods:
 
@@ -156,7 +272,7 @@ JSON.stringify(user);
 
 By default, a model will be serialized to a plain object with all the fields as is.
 
-### Inspiration
+## Inspiration
 
 The implemented concept is heavily inspired by Scala, Kotlin, and Python.
 
@@ -180,3 +296,9 @@ val updated = user.copy(name = "Ann")
 
 user.equals(update)
 ```
+
+## Contributing
+
+The project is opened for any contributions (features, updates, fixes, etc) and is [located](https://github.com/alexeyraspopov/dataclass) on GitHub. If you're interested, please check [the contributing guidelines](https://github.com/alexeyraspopov/flux-guidelines/blob/master/CONTRIBUTING.md).
+
+The project is licensed under the [MIT](https://github.com/alexeyraspopov/flux-guidelines/blob/master/LICENSE) license.
