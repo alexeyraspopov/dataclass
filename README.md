@@ -2,11 +2,11 @@
 
 To provide an effortless way to define data structures for domain models and data transfer objects that are immutable and persistent.
 
- * [Getting Started][#getting-started]
- * [API Reference][#api-reference]
- * [Serialization & Deserialization][#serialization--deserialization]
- * [Inspiration][#inspiration]
- * [Contributing][#contributing]
+ * [Getting Started](#getting-started)
+ * [API Reference](#api-reference)
+ * [Serialization & Deserialization](#serialization--deserialization)
+ * [Inspiration](#inspiration)
+ * [Contributing](#contributing)
 
 ## Getting Started
 
