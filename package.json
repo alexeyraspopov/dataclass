@@ -1,9 +1,13 @@
 {
   "name": "dataclass",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0",
   "description": "Immutable data transfer objects for JavaScript",
   "main": "dataclass.js",
   "types": "typings/dataclass.d.ts",
+  "files": [
+    "dataclass.js",
+    "typings"
+  ],
   "repository": "alexeyraspopov/dataclass",
   "devDependencies": {
     "babel-core": "~6.25.0",
