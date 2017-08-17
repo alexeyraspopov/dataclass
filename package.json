@@ -10,29 +10,36 @@
   ],
   "repository": "alexeyraspopov/dataclass",
   "devDependencies": {
+    "babel-cli": "~6.26.0",
     "babel-core": "~6.25.0",
     "babel-jest": "~20.0.3",
-    "babel-plugin-external-helpers": "~6.22.0",
     "babel-plugin-transform-class-properties": "~6.24.1",
-    "babel-plugin-transform-es2015-arrow-functions": "~6.22.0",
-    "babel-plugin-transform-es2015-block-scoping": "~6.24.1",
-    "babel-plugin-transform-es2015-classes": "~6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "~6.24.1",
-    "babel-plugin-transform-es2015-parameters": "~6.24.1",
     "babel-plugin-transform-flow-strip-types": "~6.22.0",
-    "jest": "~20.0.4",
-    "rollup": "~0.43.0",
-    "rollup-plugin-babel": "~2.7.1"
+    "babel-preset-es2015": "~6.24.1",
+    "jest": "~20.0.4"
   },
   "scripts": {
-    "test": "jest",
-    "prepublish": "rollup --format cjs --config rollup.config.js modules/Record.js > dataclass.js"
+    "test": "NODE_ENV=development jest",
+    "prepublish": "NODE_ENV=production babel modules/Record.js > dataclass.js"
   },
   "babel": {
-    "plugins": [
-      "transform-es2015-modules-commonjs",
-      "transform-class-properties",
-      "transform-flow-strip-types"
-    ]
+    "env": {
+      "development": {
+        "plugins": [
+          "transform-es2015-modules-commonjs",
+          "transform-class-properties",
+          "transform-flow-strip-types"
+        ]
+      },
+      "production": {
+        "presets": [
+          "es2015"
+        ],
+        "plugins": [
+          "transform-flow-strip-types"
+        ]
+      }
+    }
   }
 }
