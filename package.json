@@ -20,6 +20,7 @@
     "jest": "~20.0.4"
   },
   "scripts": {
+    "pretest": "npm run prepublish",
     "test": "NODE_ENV=development jest",
     "prepublish": "NODE_ENV=production babel modules/Record.js > dataclass.js"
   },
