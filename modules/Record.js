@@ -37,7 +37,8 @@ export default class Record {
 
   copy(patch) {
     const custom = Object.assign({}, this[values], patch);
-    return new this.constructor(custom);
+    const prototype = Object.getPrototypeOf(this);
+    return new prototype.constructor(custom);
   }
 
   equals(record) {
