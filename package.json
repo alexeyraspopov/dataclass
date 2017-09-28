@@ -1,11 +1,11 @@
 {
   "name": "dataclass",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Immutable data transfer objects for JavaScript",
   "main": "dataclass.js",
   "types": "typings/dataclass.d.ts",
   "files": [
-    "dataclass.js",
+    "dataclass.js.flow",
     "typings"
   ],
   "repository": "alexeyraspopov/dataclass",
@@ -22,7 +22,9 @@
   "scripts": {
     "pretest": "npm run prepublish",
     "test": "NODE_ENV=development jest",
-    "prepublish": "NODE_ENV=production babel modules/Record.js > dataclass.js"
+    "buildmodule": "NODE_ENV=production babel modules/Record.js > dataclass.js",
+    "buildtypes": "cp typings/dataclass.js.flow dataclass.js.flow",
+    "prepublish": "npm run buildmodule && npm run buildtypes"
   },
   "babel": {
     "env": {

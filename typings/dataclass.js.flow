@@ -1,7 +1,6 @@
-declare module 'dataclass' {
-  declare export default class Record {
-    constructor(custom: ?$Shape<this>): this;
-    copy(patch: $Shape<this>): this;
-    equals(record: this): boolean;
-  }
+/* @flow */
+declare export default class Record {
+  constructor(custom: ?$Shape<this>): this;
+  copy(patch: $Shape<this>): this;
+  equals(record: this): boolean;
 }
