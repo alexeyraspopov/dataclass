@@ -7,6 +7,10 @@ describe('Record', () => {
     someNum: number = 0.134;
     someBool: boolean = true;
     someNullable: ?string = null;
+
+    get exclamation() {
+      return this.someString + '!';
+    }
   }
 
   it('should create an entity with default values', () => {
@@ -82,5 +86,12 @@ describe('Record', () => {
 
     expect(entity.someBool)
       .toBe(false);
+  });
+
+  it('should support predefined getters', () => {
+    const entity = new Entity({ someString: 'abcde' });
+
+    expect(entity.exclamation)
+      .toBe('abcde!');
   });
 });
