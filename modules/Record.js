@@ -18,6 +18,8 @@ export default class Record {
     const base = this.constructor[defaults];
 
     for (const key in base) {
+      if (!base.hasOwnProperty(key)) continue;
+
       const getter = key in custom
         ? () => custom[key]
         : () => base[key];
