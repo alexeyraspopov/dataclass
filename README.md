@@ -294,7 +294,7 @@ Both Scala and Kotlin share the same compatible API:
 val user = User(name = "Liza", age = 23)
 val updated = user.copy(name = "Ann")
 
-user.equals(update)
+user.equals(updated)
 ```
 
 ## Contributing
