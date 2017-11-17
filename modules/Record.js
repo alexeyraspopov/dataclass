@@ -53,4 +53,14 @@ export default class Record {
 
     return true;
   }
+
+  toJSON() {
+    const result = {};
+
+    for (const key in this.constructor[defaults]) {
+      result[key] = this[key];
+    }
+
+    return result;
+  }
 }
