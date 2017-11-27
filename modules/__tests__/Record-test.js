@@ -29,6 +29,48 @@ describe('Record', () => {
                  someBool: true, someNullable: 1 });
   });
 
+  it('should support subclassing', () => {
+    class SubEntity extends Entity {
+      someNewThing: string = 'default';
+    }
+
+    const entityA = new SubEntity();
+    const entityB = new SubEntity({ someString: 'test', someNewThing: 'blah' });
+
+    expect(entityA)
+      .toEqual({ someString: 'default string', someNum: 0.134,
+                 someBool: true, someNullable: null, someNewThing: 'default' });
+
+    expect(entityB)
+      .toEqual({ someString: 'test', someNum: 0.134,
+                 someBool: true, someNullable: null, someNewThing: 'blah' });
+  });
+
+  it('should support polymorphism', () => {
+    class Base extends Record {
+      format: string = 'AAA';
+
+      transform(value) {
+        return this.format.replace(/A/g, value);
+      }
+    }
+
+    class Child extends Base {
+      transform(value) {
+        return '-' + this.format.replace(/A/g, value);
+      }
+    }
+
+    const baseEntity = new Base({ format: 'AAAAA' });
+    const childEntity = new Child();
+
+    expect(baseEntity.transform(1))
+      .toBe('11111');
+
+    expect(childEntity.transform(1))
+      .toBe('-111');
+  });
+
   it('should create new entity based on existent', () => {
     const entity = new Entity({ someBool: false });
     const updated = entity.copy({ someNum: 14 });

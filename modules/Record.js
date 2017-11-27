@@ -7,7 +7,7 @@ export default class Record {
   constructor(custom = {}) {
     if (custom === guard) return this;
 
-    if (!this.constructor[defaults]) {
+    if (!this.constructor.hasOwnProperty(defaults)) {
       const emptyRecord = new this.constructor(guard);
       Object.defineProperty(this.constructor, defaults, {
         enumerable: false,
