@@ -21,7 +21,7 @@ Once extended, data class can be instantiated with a new data. That's the way to
 
 #### Arguments
 
- 1. `data` (_Object_): POJO which shape satisfy the contract described during class extension. If you use [Flow](https://flow.org), it will warn you about the mistakes.
+ 1. `data` (_Object_): POJO which shape satisfies the contract described during class extension. If you use [Flow](https://flow.org), it will warn you about the mistakes.
 
 #### Returns
 

@@ -1,4 +1,4 @@
-Syntax sugar for data structures leveraging the power of type systems in JavaScript and TypeScript
+Syntax sugar for data structures leveraging the power of type systems in JavaScript and TypeScript.
 
 To provide an effortless way to define data structures for domain models and data transfer objects that are immutable and persistent.
 
