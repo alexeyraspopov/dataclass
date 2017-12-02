@@ -22,8 +22,8 @@
 
     <nav>
       <ul>
-        <li>Overview</li>
-        <li><a href="/API.html">API</a></li>
+        <li>{% if page.url == '/' %}<span>Overview</span>{% else %}<a href="/">Overview</a> {% endif %}</li>
+        <li>{% if page.url == '/API.html' %}<span>API</span>{% else %}<a href="/API.html">API</a>{% endif %}</li>
         <li><a href="https://github.com/alexeyraspopov/dataclass" target="_blank">GitHub</a></li>
       </ul>
     </nav>
