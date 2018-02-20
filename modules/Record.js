@@ -11,7 +11,7 @@ export default class Record {
       const emptyRecord = new this.constructor(guard);
       Object.defineProperty(this.constructor, defaults, {
         enumerable: false,
-        get: () => emptyRecord
+        get: () => emptyRecord,
       });
     }
 
@@ -20,20 +20,18 @@ export default class Record {
     for (const key in base) {
       if (!base.hasOwnProperty(key)) continue;
 
-      const getter = key in custom
-        ? () => custom[key]
-        : () => base[key];
+      const getter = key in custom ? () => custom[key] : () => base[key];
 
       Object.defineProperty(this, key, {
         enumerable: true,
         get: getter,
-        set: empty
+        set: empty,
       });
     }
 
     Object.defineProperty(this, values, {
       enumerable: false,
-      get: () => custom
+      get: () => custom,
     });
   }
 

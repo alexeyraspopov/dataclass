@@ -45,10 +45,10 @@ With one small difference: `Record` is generic in TypeScript's typings due to [t
 Providing a set of fields defines the class' API. New entity is created by using plain old `new` operator:
 
 ```javascript
-const userWithCustomValues = new User({ name: 'Liza', age: 23 });
+let userWithCustomValues = new User({ name: 'Liza', age: 23 });
 // > User { name: 'Liza', age: 23 }
 
-const userWithDefaultValue = new User({ name: 'Ann' });
+let userWithDefaultValue = new User({ name: 'Ann' });
 // > User { name: 'Ann', age: 0 }
 ```
 
@@ -65,10 +65,10 @@ userWithDefaultValue.age === 0;
 Whenever a change should be made, there is `copy()` method that has the same signature as constructor, based on a fields definition:
 
 ```javascript
-const user = new User({ name: 'Ann' });
+let user = new User({ name: 'Ann' });
 // > User { name: 'Ann', age: 0 }
 
-const updated = user.copy({ age: 28 });
+let updated = user.copy({ age: 28 });
 // > User { name: 'Ann', age: 28 }
 ```
 
@@ -77,8 +77,8 @@ This method returns a new entity built upon previous set of values. The target o
 Since all the entities of one class are unique by their object reference, comparison operator will always give `false` as a result. To compare the actual properties of the same class' entities, `equals()` method should be used:
 
 ```javascript
-const userA = new User({ name: 'Ann' });
-const userB = new User({ name: 'Ann' });
+let userA = new User({ name: 'Ann' });
+let userB = new User({ name: 'Ann' });
 
 userA === userB;
 // > false
@@ -158,7 +158,7 @@ class Vehicle extends Record {
   manufacturer: string = '';
 }
 
-const vehicle = new Vehicle({ manufacturer: 'Tesla', model: 'S' });
+let vehicle = new Vehicle({ manufacturer: 'Tesla', model: 'S' });
 // > Vehicle { manufacturer: 'Tesla', model: 'S' }
 
 vehicle.manufacturer
@@ -185,10 +185,10 @@ class User extends Record {
   email: string = 'email@example.com';
 }
 
-const user = new User({ name: 'Liza' });
+let user = new User({ name: 'Liza' });
 // > User { name: 'Liza', email: 'email@example.com' }
 
-const updated = user.copy({ email: 'liza@example.com' });
+let updated = user.copy({ email: 'liza@example.com' });
 // > User { name: 'Liza', email: 'liza@example.com' }
 ```
 
@@ -212,9 +212,9 @@ class Box extends Record {
   color: string = 'red';
 }
 
-const first = new Box({ color: 'green' });
-const second = new Box({ color: 'blue' });
-const third = first.copy({ color: 'blue' });
+let first = new Box({ color: 'green' });
+let second = new Box({ color: 'blue' });
+let third = first.copy({ color: 'blue' });
 
 first === second;
 // > false
@@ -239,13 +239,13 @@ class User extends Record {
   age: number = 0;
 
   static from(data: Object): User {
-    const name: string = data.name;
-    const age: number = parseInt(data.age, 10);
+    let name: string = data.name;
+    let age: number = parseInt(data.age, 10);
     return new User({ name, age });
   }
 }
 
-const user = User.from({ name: 'Liza', age: '18', someUnusedFlag: true });
+let user = User.from({ name: 'Liza', age: '18', someUnusedFlag: true });
 ```
 
 That's how native things handle these cases: see [`Array.from()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
@@ -263,7 +263,7 @@ class User extends Record {
   }
 }
 
-const user = new User({ name: 'Liza', age: 23 });
+let user = new User({ name: 'Liza', age: 23 });
 // > User { name: 'Liza', age: 23 }
 
 JSON.stringify(user);
