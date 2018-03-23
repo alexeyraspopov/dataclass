@@ -16,7 +16,7 @@ describe('Record', () => {
   it('should create an entity with default values', () => {
     const entity = new Entity();
 
-    expect(entity).toEqual({
+    expect(entity.toJSON()).toEqual({
       someString: 'default string',
       someNum: 0.134,
       someBool: true,
@@ -27,7 +27,7 @@ describe('Record', () => {
   it('should override defaults with custom values', () => {
     const entity = new Entity({ someNullable: 1, someString: 'hello' });
 
-    expect(entity).toEqual({
+    expect(entity.toJSON()).toEqual({
       someString: 'hello',
       someNum: 0.134,
       someBool: true,
@@ -43,7 +43,7 @@ describe('Record', () => {
     const entityA = new SubEntity();
     const entityB = new SubEntity({ someString: 'test', someNewThing: 'blah' });
 
-    expect(entityA).toEqual({
+    expect(entityA.toJSON()).toEqual({
       someString: 'default string',
       someNum: 0.134,
       someBool: true,
@@ -51,7 +51,7 @@ describe('Record', () => {
       someNewThing: 'default',
     });
 
-    expect(entityB).toEqual({
+    expect(entityB.toJSON()).toEqual({
       someString: 'test',
       someNum: 0.134,
       someBool: true,
@@ -87,14 +87,14 @@ describe('Record', () => {
     const entity = new Entity({ someBool: false });
     const updated = entity.copy({ someNum: 14 });
 
-    expect(entity).toEqual({
+    expect(entity.toJSON()).toEqual({
       someString: 'default string',
       someNum: 0.134,
       someBool: false,
       someNullable: null,
     });
 
-    expect(updated).toEqual({
+    expect(updated.toJSON()).toEqual({
       someString: 'default string',
       someNum: 14,
       someBool: false,
