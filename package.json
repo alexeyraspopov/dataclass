@@ -2,14 +2,28 @@
   "name": "dataclass",
   "version": "1.1.1",
   "description": "Immutable data transfer objects for JavaScript",
-  "main": "dataclass.js",
+  "author": "Alexey Raspopov",
+  "license": "MIT",
+  "homepage": "https://dataclass.js.org/",
+  "repository": "alexeyraspopov/dataclass",
+  "main": "build/dataclass.js",
+  "module": "build/dataclass.module.js",
   "types": "typings/dataclass.d.ts",
   "files": [
     "build/",
     "typings/",
     "LICENSE"
   ],
-  "repository": "alexeyraspopov/dataclass",
+  "keywords": [
+    "immutable",
+    "value-objects",
+    "data-structures",
+    "typings"
+  ],
+  "scripts": {
+    "test": "NODE_ENV=development jest --coverage",
+    "prepublish": "./scripts/publish.sh"
+  },
   "devDependencies": {
     "babel-core": "~6.25.0",
     "babel-jest": "^22.4.3",
@@ -21,10 +35,6 @@
     "jest": "^22.4.3",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3"
-  },
-  "scripts": {
-    "test": "NODE_ENV=development jest --coverage",
-    "prepublish": "./scripts/publish.sh"
   },
   "babel": {
     "presets": [
