@@ -34,7 +34,8 @@
     "babel-preset-es2015": "~6.24.1",
     "jest": "^22.4.3",
     "rollup": "^0.57.1",
-    "rollup-plugin-babel": "^3.0.3"
+    "rollup-plugin-babel": "^3.0.3",
+    "size-limit": "^0.17.0"
   },
   "babel": {
     "presets": [
@@ -51,5 +52,15 @@
       "transform-class-properties",
       "transform-flow-strip-types"
     ]
-  }
+  },
+  "size-limit": [
+    {
+      "limit": "516 B",
+      "path": "build/dataclass.js"
+    },
+    {
+      "limit": "523 B",
+      "path": "build/dataclass.module.js"
+    }
+  ]
 }
