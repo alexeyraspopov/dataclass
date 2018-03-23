@@ -1,6 +1,10 @@
-## Syntax sugar for data structures leveraging the power of type systems in JavaScript and TypeScript
+# Data Class
 
-To provide an effortless way to define data structures for domain models and data transfer objects that are immutable and persistent.
+    npm install dataclass
+
+Syntax sugar that leverages the power of available type systems in JavaScript
+and TypeScript to provide an effortless way for defining data structures of
+domain models and data transfer objects that are immutable and persistent.
 
  * [Getting Started](#getting-started)
  * [API Reference](#api-reference)
@@ -9,10 +13,6 @@ To provide an effortless way to define data structures for domain models and dat
  * [Contributing](#contributing)
 
 ## Getting Started
-
-```bash
-npm install dataclass
-```
 
 This library provides an abstract class `Record`:
 
