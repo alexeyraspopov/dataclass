@@ -1,26 +1,26 @@
-const guard = Symbol('EmptyRecord');
-const values = Symbol('CustomValues');
-const defaults = Symbol('DefaultValues');
-const empty = () => void 0;
+let guard = Symbol('EmptyRecord');
+let values = Symbol('CustomValues');
+let defaults = Symbol('DefaultValues');
+let empty = () => void 0;
 
 export default class Record {
   constructor(custom = {}) {
     if (custom === guard) return this;
 
     if (!this.constructor.hasOwnProperty(defaults)) {
-      const emptyRecord = new this.constructor(guard);
+      let emptyRecord = new this.constructor(guard);
       Object.defineProperty(this.constructor, defaults, {
         enumerable: false,
         get: () => emptyRecord,
       });
     }
 
-    const base = this.constructor[defaults];
+    let base = this.constructor[defaults];
 
-    for (const key in base) {
+    for (let key in base) {
       if (!base.hasOwnProperty(key)) continue;
 
-      const getter = key in custom ? () => custom[key] : () => base[key];
+      let getter = key in custom ? () => custom[key] : () => base[key];
 
       Object.defineProperty(this, key, {
         enumerable: true,
@@ -36,16 +36,16 @@ export default class Record {
   }
 
   copy(patch) {
-    const custom = Object.assign({}, this[values], patch);
-    const prototype = Object.getPrototypeOf(this);
+    let custom = Object.assign({}, this[values], patch);
+    let prototype = Object.getPrototypeOf(this);
     return new prototype.constructor(custom);
   }
 
   equals(record) {
-    const a = this[values];
-    const b = record[values];
+    let a = this[values];
+    let b = record[values];
 
-    for (const key in this.constructor[defaults]) {
+    for (let key in this.constructor[defaults]) {
       if (a[key] !== b[key]) return false;
     }
 
@@ -53,9 +53,9 @@ export default class Record {
   }
 
   toJSON() {
-    const result = {};
+    let result = {};
 
-    for (const key in this.constructor[defaults]) {
+    for (let key in this.constructor[defaults]) {
       result[key] = this[key];
     }
 
