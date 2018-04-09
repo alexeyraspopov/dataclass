@@ -14,7 +14,7 @@ describe('Record', () => {
   }
 
   it('should create an entity with default values', () => {
-    const entity = new Entity();
+    let entity = new Entity();
 
     expect(entity.toJSON()).toEqual({
       someString: 'default string',
@@ -25,7 +25,7 @@ describe('Record', () => {
   });
 
   it('should override defaults with custom values', () => {
-    const entity = new Entity({ someNullable: 1, someString: 'hello' });
+    let entity = new Entity({ someNullable: 1, someString: 'hello' });
 
     expect(entity.toJSON()).toEqual({
       someString: 'hello',
@@ -40,8 +40,8 @@ describe('Record', () => {
       someNewThing: string = 'default';
     }
 
-    const entityA = new SubEntity();
-    const entityB = new SubEntity({ someString: 'test', someNewThing: 'blah' });
+    let entityA = new SubEntity();
+    let entityB = new SubEntity({ someString: 'test', someNewThing: 'blah' });
 
     expect(entityA.toJSON()).toEqual({
       someString: 'default string',
@@ -75,17 +75,16 @@ describe('Record', () => {
       }
     }
 
-    const baseEntity = new Base({ format: 'AAAAA' });
-    const childEntity = new Child();
+    let baseEntity = new Base({ format: 'AAAAA' });
+    let childEntity = new Child();
 
     expect(baseEntity.transform(1)).toBe('11111');
-
     expect(childEntity.transform(1)).toBe('-111');
   });
 
   it('should create new entity based on existent', () => {
-    const entity = new Entity({ someBool: false });
-    const updated = entity.copy({ someNum: 14 });
+    let entity = new Entity({ someBool: false });
+    let updated = entity.copy({ someNum: 14 });
 
     expect(entity.toJSON()).toEqual({
       someString: 'default string',
@@ -103,18 +102,17 @@ describe('Record', () => {
   });
 
   it('should compare custom values for two entities of the same type', () => {
-    const entity = new Entity({ someBool: false });
-    const equal = new Entity({ someBool: false });
-    const updated = entity.copy({ someNum: 14 });
+    let entity = new Entity({ someBool: false });
+    let equal = new Entity({ someBool: false });
+    let updated = entity.copy({ someNum: 14 });
 
     expect(entity.equals(updated)).toBe(false);
-
     expect(entity.equals(equal)).toBe(true);
   });
 
   it('should be serializable', () => {
-    const entity = new Entity({ someBool: false });
-    const raw = {
+    let entity = new Entity({ someBool: false });
+    let raw = {
       someString: 'default string',
       someNum: 0.134,
       someBool: false,
@@ -125,7 +123,7 @@ describe('Record', () => {
   });
 
   it('should support iterables', () => {
-    const entity = new Entity({ someBool: false });
+    let entity = new Entity({ someBool: false });
 
     expect(Object.entries(entity)).toEqual([
       ['someString', 'default string'],
@@ -150,7 +148,7 @@ describe('Record', () => {
   });
 
   it('should not allow assignment', () => {
-    const entity = new Entity({ someBool: false });
+    let entity = new Entity({ someBool: false });
 
     entity.someBool = null;
 
@@ -158,7 +156,7 @@ describe('Record', () => {
   });
 
   it('should support predefined getters', () => {
-    const entity = new Entity({ someString: 'abcde' });
+    let entity = new Entity({ someString: 'abcde' });
 
     expect(entity.exclamation).toBe('abcde!');
   });
