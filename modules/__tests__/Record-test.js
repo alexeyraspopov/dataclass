@@ -35,6 +35,14 @@ describe('Record', () => {
     });
   });
 
+  it('should satisfy composition law', () => {
+    let entity = new Entity();
+    let left = entity.copy({ someNum: 13, someBool: false });
+    let right = entity.copy({ someNum: 13 }).copy({ someBool: false });
+
+    expect(left.toJSON()).toEqual(right.toJSON());
+  });
+
   it('should support subclassing', () => {
     class SubEntity extends Entity {
       someNewThing: string = 'default';
@@ -108,6 +116,27 @@ describe('Record', () => {
 
     expect(entity.equals(updated)).toBe(false);
     expect(entity.equals(equal)).toBe(true);
+  });
+
+  it('should satisfy symmetry law', () => {
+    let a = new Entity({ someString: '1' });
+    let b = new Entity({ someString: '1' });
+    let c = new Entity({ someString: '2' });
+
+    expect(a.equals(b)).toBeTruthy();
+    expect(b.equals(a)).toBeTruthy();
+    expect(a.equals(c)).toBeFalsy();
+    expect(c.equals(a)).toBeFalsy();
+  });
+
+  it('should satisfy transitivity law', () => {
+    let a = new Entity({ someString: 'hello' });
+    let b = new Entity({ someString: 'hello' });
+    let c = new Entity({ someString: 'hello' });
+
+    expect(a.equals(b)).toBeTruthy();
+    expect(b.equals(c)).toBeTruthy();
+    expect(a.equals(c)).toBeTruthy();
   });
 
   it('should be serializable', () => {
