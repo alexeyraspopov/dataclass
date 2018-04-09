@@ -1,5 +1,8 @@
 {
   "name": "dataclass-typescript-example",
+  "dependencies": {
+    "dataclass": "~1.1.1"
+  },
   "devDependencies": {
     "typescript": "~2.3.4"
   },
