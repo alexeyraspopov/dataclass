@@ -339,7 +339,8 @@ JSON.stringify(user);
 // > { "name": "Liza", "age": 23 }
 ```
 
-By default, a model will be serialized to a plain object with all the fields as is.
+By default, a model will be serialized to a plain object with all the fields as
+is, so there is no need to implement `toJSON()` from example above.
 
 ## Contributing
 
