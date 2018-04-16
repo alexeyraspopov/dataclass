@@ -6,11 +6,49 @@ Syntax sugar that leverages the power of available type systems in JavaScript
 and TypeScript to provide an effortless way for defining data structures of
 domain models and data transfer objects that are immutable and persistent.
 
+ * [Prior Art](#prior-art)
  * [Getting Started](#getting-started)
  * [API Reference](#api-reference)
  * [Serialization & Deserialization](#serialization--deserialization)
- * [Inspiration](#inspiration)
  * [Contributing](#contributing)
+
+## Prior Art
+
+The implemented concept is heavily inspired by Scala and Kotlin. Both languages
+have the implementation of data classes as a part of their syntax and share
+similar APIs.
+
+See [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) in Scala:
+
+```scala
+case class User(name: String = "Anonymous", age: Int = 0)
+```
+
+And [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) in Kotlin:
+
+```kotlin
+data class User(val name: String = "Anonymous", val age: Int = 0)
+```
+
+```scala
+val user = User(name = "Liza", age = 23)
+val updated = user.copy(name = "Ann")
+
+user.equals(updated)
+```
+
+Similar concept of persistent and immutable structures can be found in Python's
+package [`pyrsistent`](https://github.com/tobgu/pyrsistent):
+
+```python
+from pyrsistent import PRecord, field
+
+class User(PRecord):
+  name = field(type=str)
+  age = field(type=int)
+
+user = User(name=u'Liza', age=23)
+```
 
 ## Getting Started
 
@@ -302,31 +340,6 @@ JSON.stringify(user);
 ```
 
 By default, a model will be serialized to a plain object with all the fields as is.
-
-## Inspiration
-
-The implemented concept is heavily inspired by Scala, Kotlin, and Python.
-
-Compare it to Scala:
-
-```scala
-case class User(name: String = "Anonymous", age: Int = 0)
-```
-
-And Kotlin:
-
-```kotlin
-data class User(val name: String = "Anonymous", val age: Int = 0)
-```
-
-Both Scala and Kotlin share the same compatible API:
-
-```scala
-val user = User(name = "Liza", age = 23)
-val updated = user.copy(name = "Ann")
-
-user.equals(updated)
-```
 
 ## Contributing
 
