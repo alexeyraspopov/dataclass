@@ -10,8 +10,7 @@ export default class Record {
     if (!this.constructor.hasOwnProperty(defaults)) {
       let emptyRecord = new this.constructor(guard);
       Object.defineProperty(this.constructor, defaults, {
-        enumerable: false,
-        get: () => emptyRecord,
+        value: emptyRecord,
       });
     }
 
@@ -30,8 +29,7 @@ export default class Record {
     }
 
     Object.defineProperty(this, values, {
-      enumerable: false,
-      get: () => custom,
+      value: custom,
     });
   }
 
