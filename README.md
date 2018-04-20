@@ -38,7 +38,8 @@ user.equals(updated)
 ```
 
 Similar concept of persistent and immutable structures can be found in Python's
-package [`pyrsistent`](https://github.com/tobgu/pyrsistent):
+package [`pyrsistent`](https://github.com/tobgu/pyrsistent) and defined in
+[PEP-0557](https://www.python.org/dev/peps/pep-0557/):
 
 ```python
 from pyrsistent import PRecord, field
