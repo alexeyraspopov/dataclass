@@ -118,6 +118,46 @@ describe('Record', () => {
     expect(entity.equals(equal)).toBe(true);
   });
 
+  class Embedded extends Record {
+    name: string = 'name';
+    age: number = 1;
+    entity: Entity = new Entity();
+    date: Date = new Date();
+    obj: Object = {foo: 'bar'};
+  }
+
+  it('should be serializable with embedded dataclass', () => {
+    let embedded = new Embedded({
+      date: new Date('1996-12-17T03:24:00')
+    });
+    let raw = {
+      name: "name",
+      age: 1,
+      entity: {
+        someString: "default string",
+        someNum: 0.134,
+        someBool: true,
+        someNullable: null
+      },
+      date: "1996-12-16T19:24:00.000Z",
+      obj: {
+        foo: "bar"
+      }
+    };
+    expect(JSON.stringify(embedded)).toBe(JSON.stringify(raw));
+  })
+
+  // FIXME: equals cannot compare dataclass with value other than primitive value
+  it.skip('should compare dataclass with non-primitive value', () => {
+    let embeddedA = new Embedded({
+      date: new Date('1996-12-17T03:24:00')
+    });
+    let embeddedB = new Embedded({
+      date: new Date('1996-12-17T03:24:00')
+    });
+    expect(embeddedA.equals(embeddedB)).toBe(true);
+  })
+
   it('should satisfy symmetry law', () => {
     let a = new Entity({ someString: '1' });
     let b = new Entity({ someString: '1' });
