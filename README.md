@@ -268,8 +268,9 @@ way to compare the actual values.
 
 #### Returns
 
-(_Boolean_): `false` if some field value is not equal in both records. `true`
-otherwise.
+(_Boolean_): `false` if some field value is not
+[strictly equal](https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6) 
+in both records. `true` otherwise.
 
 #### Example
 
