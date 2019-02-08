@@ -1,4 +1,4 @@
-workflow "New workflow" {
+workflow "Master Test Run" {
   on = "push"
   resolves = ["Test"]
 }
