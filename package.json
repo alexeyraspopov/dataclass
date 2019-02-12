@@ -54,6 +54,9 @@
       "transform-flow-strip-types"
     ]
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "size-limit": [
     {
       "limit": "502 B",
