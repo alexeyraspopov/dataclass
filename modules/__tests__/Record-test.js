@@ -127,8 +127,9 @@ describe('Record', () => {
   }
 
   it('should be serializable with embedded dataclass', () => {
+    let dummyDate = new Date('1996-12-17T03:24:00');
     let embedded = new Embedded({
-      date: new Date('1996-12-17T03:24:00')
+      date: dummyDate
     });
     let raw = {
       name: "name",
@@ -139,7 +140,7 @@ describe('Record', () => {
         someBool: true,
         someNullable: null
       },
-      date: "1996-12-16T19:24:00.000Z",
+      date: dummyDate.toISOString(),
       obj: {
         foo: "bar"
       }
