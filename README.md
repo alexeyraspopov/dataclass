@@ -37,18 +37,20 @@ val updated = user.copy(name = "Ann")
 user.equals(updated)
 ```
 
-Similar concept of persistent and immutable structures can be found in Python's
-package [`pyrsistent`](https://github.com/tobgu/pyrsistent) and defined in
-[PEP-0557](https://www.python.org/dev/peps/pep-0557/):
+And [Data Classes](https://docs.python.org/3/library/dataclasses.html) in Python:
 
 ```python
-from pyrsistent import PRecord, field
+from dataclasses import dataclass, replace
 
-class User(PRecord):
-  name = field(type=str)
-  age = field(type=int)
+@dataclass
+class User:
+  name: str = 'Anonymous'
+  age: int = 0
 
-user = User(name=u'Liza', age=23)
+user = User(name='Liza', age=23)
+updated = replace(user, name='Ann')
+
+user == updated
 ```
 
 ## Getting Started
