@@ -44,7 +44,9 @@ export default class Record {
     let b = record[values];
 
     for (let key in this.constructor[defaults]) {
-      if (a[key] !== b[key]) return false;
+      if (a[key] && typeof a[key].equals === 'function') {
+        if (!a[key].equals(b[key])) return false;
+      } else if (a[key] !== b[key]) return false;
     }
 
     return true;
