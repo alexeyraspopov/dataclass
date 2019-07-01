@@ -161,8 +161,13 @@ describe('Record', () => {
       date: new Date('1996-12-17T03:24:00'),
       entity: new Entity({ someBool: true })
     });
+    let embeddedD = new Embedded({
+      date: new Date('2001-12-17T03:24:00'),
+      entity: new Entity({ someBool: true })
+    });
     expect(embeddedA.equals(embeddedB)).toBe(true);
     expect(embeddedB.equals(embeddedC)).toBe(false);
+    expect(embeddedC.equals(embeddedD)).toBe(false);
   });
 
   it('should satisfy symmetry law', () => {
