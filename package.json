@@ -59,11 +59,11 @@
   },
   "size-limit": [
     {
-      "limit": "502 B",
+      "limit": "457 B",
       "path": "build/dataclass.js"
     },
     {
-      "limit": "512 B",
+      "limit": "465 B",
       "path": "build/dataclass.module.js"
     }
   ]
