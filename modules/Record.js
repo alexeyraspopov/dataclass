@@ -44,9 +44,13 @@ export default class Record {
     let b = record[values];
 
     for (let key in this.constructor[defaults]) {
-      if (a[key] && typeof a[key].equals === 'function') {
-        if (!a[key].equals(b[key])) return false;
-      } else if (a[key] !== b[key]) return false;
+      let valueA = a[key];
+      let valueB = b[key];
+      if (valueA && typeof valueA.equals === 'function') {
+        if (!valueA.equals(valueB)) return false;
+      } else if (valueA && typeof valueA.valueOf === 'function') {
+        if (valueA.valueOf() !== valueB.valueOf()) return false;
+      } else if (valueA !== valueB) return false;
     }
 
     return true;

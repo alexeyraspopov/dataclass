@@ -150,12 +150,15 @@ describe('Record', () => {
 
   it('should compare dataclass with nested value objects', () => {
     let embeddedA = new Embedded({
+      date: new Date('1996-12-17T03:24:00'),
       entity: new Entity({ someBool: false })
     });
     let embeddedB = new Embedded({
+      date: new Date('1996-12-17T03:24:00'),
       entity: new Entity({ someBool: false })
     });
     let embeddedC = new Embedded({
+      date: new Date('1996-12-17T03:24:00'),
       entity: new Entity({ someBool: true })
     });
     expect(embeddedA.equals(embeddedB)).toBe(true);
