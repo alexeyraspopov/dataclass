@@ -175,6 +175,20 @@ class User extends Record {
 Getters may receive arguments, however it is recommended to keep them primitive, so a model
 [won't know](https://en.wikipedia.org/wiki/Law_of_Demeter) about some others' internals.
 
+When you're modeling complex domains, you may find the need to have one record as a part of another
+record. This library supports it seamlessly:
+
+```javascript
+class Url extends Record {
+  protocol: string = 'https';
+  hostname: string;
+}
+
+class Server extends Record {
+  location: Url;
+}
+```
+
 ## API Reference
 
 ### `Record`
