@@ -61,7 +61,7 @@ export default class Record {
 
     for (let key in this.constructor[defaults]) {
       let value = this[key];
-      result[key] = (value && typeof value.toJSON === 'function') ? value.toJSON() : value
+      result[key] = value && typeof value.toJSON === 'function' ? value.toJSON() : value;
     }
 
     return result;

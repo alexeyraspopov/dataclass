@@ -34,9 +34,16 @@
     "babel-preset-env": "^1.6.1",
     "jest": "^22.4.3",
     "jest-junit": "^3.6.0",
+    "prettier": "^2.4.1",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
     "size-limit": "^0.17.0"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "proseWrap": "always"
   },
   "babel": {
     "presets": [

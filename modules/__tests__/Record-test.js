@@ -123,47 +123,47 @@ describe('Record', () => {
     age: number = 1;
     entity: Entity = new Entity();
     date: Date = new Date();
-    obj: Object = {foo: 'bar'};
+    obj: Object = { foo: 'bar' };
   }
 
   it('should be serializable with embedded dataclass', () => {
     let dummyDate = new Date('1996-12-17T03:24:00');
     let embedded = new Embedded({
-      date: dummyDate
+      date: dummyDate,
     });
     let raw = {
-      name: "name",
+      name: 'name',
       age: 1,
       entity: {
-        someString: "default string",
+        someString: 'default string',
         someNum: 0.134,
         someBool: true,
-        someNullable: null
+        someNullable: null,
       },
       date: dummyDate.toISOString(),
       obj: {
-        foo: "bar"
-      }
+        foo: 'bar',
+      },
     };
     expect(JSON.stringify(embedded)).toBe(JSON.stringify(raw));
-  })
+  });
 
   it('should compare dataclass with nested value objects', () => {
     let embeddedA = new Embedded({
       date: new Date('1996-12-17T03:24:00'),
-      entity: new Entity({ someBool: false })
+      entity: new Entity({ someBool: false }),
     });
     let embeddedB = new Embedded({
       date: new Date('1996-12-17T03:24:00'),
-      entity: new Entity({ someBool: false })
+      entity: new Entity({ someBool: false }),
     });
     let embeddedC = new Embedded({
       date: new Date('1996-12-17T03:24:00'),
-      entity: new Entity({ someBool: true })
+      entity: new Entity({ someBool: true }),
     });
     let embeddedD = new Embedded({
       date: new Date('2001-12-17T03:24:00'),
-      entity: new Entity({ someBool: true })
+      entity: new Entity({ someBool: true }),
     });
     expect(embeddedA.equals(embeddedB)).toBe(true);
     expect(embeddedB.equals(embeddedC)).toBe(false);
@@ -213,19 +213,9 @@ describe('Record', () => {
       ['someNullable', null],
     ]);
 
-    expect(Object.keys(entity)).toEqual([
-      'someString',
-      'someNum',
-      'someBool',
-      'someNullable',
-    ]);
+    expect(Object.keys(entity)).toEqual(['someString', 'someNum', 'someBool', 'someNullable']);
 
-    expect(Object.values(entity)).toEqual([
-      'default string',
-      0.134,
-      false,
-      null,
-    ]);
+    expect(Object.values(entity)).toEqual(['default string', 0.134, false, null]);
   });
 
   it('should not allow assignment', () => {

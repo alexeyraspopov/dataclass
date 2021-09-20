@@ -2,10 +2,8 @@ import babel from 'rollup-plugin-babel';
 
 let config = {
   babelrc: false,
-  presets: [
-    ['env', { modules: false }],
-  ],
-  plugins: ['external-helpers']
+  presets: [['env', { modules: false }]],
+  plugins: ['external-helpers'],
 };
 
 export default [
@@ -23,6 +21,6 @@ export default [
       file: 'build/dataclass.module.js',
       format: 'es',
     },
-    plugins: [babel(config)]
+    plugins: [babel(config)],
   },
 ];
