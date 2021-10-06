@@ -1,10 +1,6 @@
-declare module 'dataclass' {
-  // Record is generic due to the issue with constructor typings
-  // https://github.com/Microsoft/TypeScript/issues/5863
-  export default class Record<T> {
-    constructor(custom?: Partial<T>);
-    copy(patch: Partial<T>): T;
-    equals(record: T): boolean;
-    toJSON(): Object;
-  }
+export class Record {
+  static create(custom?: Partial<this>): this;
+  copy(patch: Partial<this>): this;
+  equals(record: this): boolean;
+  toJSON(): Object;
 }

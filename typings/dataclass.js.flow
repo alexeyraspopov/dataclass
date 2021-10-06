@@ -1,6 +1,5 @@
-/* @flow */
-declare export default class Record {
-  constructor(custom: ?$Shape<this>): this;
+declare export class Record {
+  static create(custom?: $Shape<this>): this;
   copy(patch: $Shape<this>): this;
   equals(record: this): boolean;
   toJSON(): Object;
