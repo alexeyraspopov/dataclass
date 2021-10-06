@@ -1,56 +1,43 @@
 let guard = Symbol('EmptyRecord');
 let values = Symbol('CustomValues');
-let defaults = Symbol('DefaultValues');
-let empty = () => void 0;
+let callable = (v, m) => v != null && typeof v[m] === 'function';
 
-export default class Record {
-  constructor(custom = {}) {
-    if (custom === guard) return this;
+export class Record {
+  static create(values = {}) {
+    let record = new this(guard);
+    Object.defineProperty(record, values, { value: values });
+    Object.assign(record, values);
+    return Object.freeze(record);
+  }
 
-    if (!this.constructor.hasOwnProperty(defaults)) {
-      let emptyRecord = new this.constructor(guard);
-      Object.defineProperty(this.constructor, defaults, {
-        value: emptyRecord,
-      });
-    }
-
-    let base = this.constructor[defaults];
-
-    for (let key in base) {
-      if (!base.hasOwnProperty(key)) continue;
-
-      let getter = key in custom ? () => custom[key] : () => base[key];
-
-      Object.defineProperty(this, key, {
-        enumerable: true,
-        get: getter,
-        set: empty,
-      });
-    }
-
-    Object.defineProperty(this, values, {
-      value: custom,
-    });
+  constructor(value) {
+    if (value !== guard) throw new Error('Use Class.create(...) method instead of `new` operator');
   }
 
   copy(patch) {
-    let custom = Object.assign({}, this[values], patch);
+    let values = Object.assign({}, this[values], patch);
     let prototype = Object.getPrototypeOf(this);
-    return new prototype.constructor(custom);
+    return prototype.constructor.create(values);
   }
 
   equals(record) {
-    let a = this[values];
-    let b = record[values];
+    let va = this[values];
+    let vb = record[values];
 
-    for (let key in this.constructor[defaults]) {
-      let valueA = a[key];
-      let valueB = b[key];
-      if (valueA && typeof valueA.equals === 'function') {
-        if (!valueA.equals(valueB)) return false;
-      } else if (valueA && typeof valueA.valueOf === 'function') {
-        if (valueA.valueOf() !== valueB.valueOf()) return false;
-      } else if (valueA !== valueB) return false;
+    for (let key in this) {
+      let hasA = va.hasOwnProperty(key);
+      let hasB = vb.hasOwnProperty(key);
+      if (hasA || hasB) {
+        let a = hasA ? va[key] : this[key];
+        let b = hasB ? vb[key] : record[key];
+        if (a !== b) {
+          if (callable(a, 'equals') && callable(b, 'equals')) {
+            if (!a.equals(b)) return false;
+          } else if (callable(a, 'valueOf') && callable(b, 'valueOf')) {
+            if (a.valueOf() !== b.valueOf()) return false;
+          } else return false;
+        }
+      }
     }
 
     return true;
@@ -58,12 +45,10 @@ export default class Record {
 
   toJSON() {
     let result = {};
-
-    for (let key in this.constructor[defaults]) {
+    for (let key in this) {
       let value = this[key];
-      result[key] = value && typeof value.toJSON === 'function' ? value.toJSON() : value;
+      result[key] = callable(value, 'toJSON') ? value.toJSON() : value;
     }
-
     return result;
   }
 }

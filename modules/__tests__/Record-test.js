@@ -1,5 +1,5 @@
 /* @flow */
-import Record from '../Record';
+import { Record } from '../Record.js';
 
 describe('Record', () => {
   class Entity extends Record {
@@ -14,7 +14,7 @@ describe('Record', () => {
   }
 
   it('should create an entity with default values', () => {
-    let entity = new Entity();
+    let entity = Entity.create();
 
     expect(entity.toJSON()).toEqual({
       someString: 'default string',
@@ -25,7 +25,7 @@ describe('Record', () => {
   });
 
   it('should override defaults with custom values', () => {
-    let entity = new Entity({ someNullable: 1, someString: 'hello' });
+    let entity = Entity.create({ someNullable: 1, someString: 'hello' });
 
     expect(entity.toJSON()).toEqual({
       someString: 'hello',
@@ -36,7 +36,7 @@ describe('Record', () => {
   });
 
   it('should satisfy composition law', () => {
-    let entity = new Entity();
+    let entity = Entity.create();
     let left = entity.copy({ someNum: 13, someBool: false });
     let right = entity.copy({ someNum: 13 }).copy({ someBool: false });
 
@@ -48,8 +48,8 @@ describe('Record', () => {
       someNewThing: string = 'default';
     }
 
-    let entityA = new SubEntity();
-    let entityB = new SubEntity({ someString: 'test', someNewThing: 'blah' });
+    let entityA = SubEntity.create();
+    let entityB = SubEntity.create({ someString: 'test', someNewThing: 'blah' });
 
     expect(entityA.toJSON()).toEqual({
       someString: 'default string',
@@ -83,15 +83,15 @@ describe('Record', () => {
       }
     }
 
-    let baseEntity = new Base({ format: 'AAAAA' });
-    let childEntity = new Child();
+    let baseEntity = Base.create({ format: 'AAAAA' });
+    let childEntity = Child.create();
 
     expect(baseEntity.transform(1)).toBe('11111');
     expect(childEntity.transform(1)).toBe('-111');
   });
 
   it('should create new entity based on existent', () => {
-    let entity = new Entity({ someBool: false });
+    let entity = Entity.create({ someBool: false });
     let updated = entity.copy({ someNum: 14 });
 
     expect(entity.toJSON()).toEqual({
@@ -110,25 +110,33 @@ describe('Record', () => {
   });
 
   it('should compare custom values for two entities of the same type', () => {
-    let entity = new Entity({ someBool: false });
-    let equal = new Entity({ someBool: false });
-    let updated = entity.copy({ someNum: 14 });
+    let entityA = Entity.create({ someBool: false, someNullable: null });
+    let equal = Entity.create({ someBool: false, someNum: 0.134 });
+    let unequal = Entity.create({ someBool: false, someNullable: undefined });
+    let entityB = Entity.create({ someNullable: 1 });
+    let entityC = Entity.create({ someNullable: null });
+    let extended = entityB.copy({ someBool: true });
+    let updated = entityA.copy({ someNum: 14 });
 
-    expect(entity.equals(updated)).toBe(false);
-    expect(entity.equals(equal)).toBe(true);
+    expect(entityA.equals(updated)).toBe(false);
+    expect(entityA.equals(equal)).toBe(true);
+    expect(unequal.equals(equal)).toBe(false);
+    expect(entityB.equals(extended)).toBe(true);
+    expect(entityB.equals(entityA)).toBe(false);
+    expect(entityB.equals(entityC)).toBe(false);
   });
 
   class Embedded extends Record {
     name: string = 'name';
     age: number = 1;
-    entity: Entity = new Entity();
+    entity: Entity = Entity.create();
     date: Date = new Date();
     obj: Object = { foo: 'bar' };
   }
 
   it('should be serializable with embedded dataclass', () => {
     let dummyDate = new Date('1996-12-17T03:24:00');
-    let embedded = new Embedded({
+    let embedded = Embedded.create({
       date: dummyDate,
     });
     let raw = {
@@ -149,50 +157,55 @@ describe('Record', () => {
   });
 
   it('should compare dataclass with nested value objects', () => {
-    let embeddedA = new Embedded({
+    let embeddedA = Embedded.create({
       date: new Date('1996-12-17T03:24:00'),
-      entity: new Entity({ someBool: false }),
+      entity: Entity.create({ someBool: false }),
     });
-    let embeddedB = new Embedded({
+    let embeddedB = Embedded.create({
       date: new Date('1996-12-17T03:24:00'),
-      entity: new Entity({ someBool: false }),
+      entity: Entity.create({ someBool: false }),
     });
-    let embeddedC = new Embedded({
+    let embeddedC = Embedded.create({
       date: new Date('1996-12-17T03:24:00'),
-      entity: new Entity({ someBool: true }),
+      entity: Entity.create({ someBool: true }),
     });
-    let embeddedD = new Embedded({
+    let embeddedD = Embedded.create({
       date: new Date('2001-12-17T03:24:00'),
-      entity: new Entity({ someBool: true }),
+      entity: Entity.create({ someBool: true }),
+    });
+    let embeddedE = Embedded.create({
+      date: new Date('2001-12-17T03:24:00'),
+      entity: null,
     });
     expect(embeddedA.equals(embeddedB)).toBe(true);
     expect(embeddedB.equals(embeddedC)).toBe(false);
     expect(embeddedC.equals(embeddedD)).toBe(false);
+    expect(embeddedD.equals(embeddedE)).toBe(false);
   });
 
   it('should satisfy symmetry law', () => {
-    let a = new Entity({ someString: '1' });
-    let b = new Entity({ someString: '1' });
-    let c = new Entity({ someString: '2' });
+    let a = Entity.create({ someString: '1' });
+    let b = Entity.create({ someString: '1' });
+    let c = Entity.create({ someString: '2' });
 
-    expect(a.equals(b)).toBeTruthy();
-    expect(b.equals(a)).toBeTruthy();
-    expect(a.equals(c)).toBeFalsy();
-    expect(c.equals(a)).toBeFalsy();
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(a)).toBe(true);
+    expect(a.equals(c)).toBe(false);
+    expect(c.equals(a)).toBe(false);
   });
 
   it('should satisfy transitivity law', () => {
-    let a = new Entity({ someString: 'hello' });
-    let b = new Entity({ someString: 'hello' });
-    let c = new Entity({ someString: 'hello' });
+    let a = Entity.create({ someString: 'hello' });
+    let b = Entity.create({ someString: 'hello' });
+    let c = Entity.create({ someString: 'hello' });
 
-    expect(a.equals(b)).toBeTruthy();
-    expect(b.equals(c)).toBeTruthy();
-    expect(a.equals(c)).toBeTruthy();
+    expect(a.equals(b)).toBe(true);
+    expect(b.equals(c)).toBe(true);
+    expect(a.equals(c)).toBe(true);
   });
 
   it('should be serializable', () => {
-    let entity = new Entity({ someBool: false });
+    let entity = Entity.create({ someBool: false });
     let raw = {
       someString: 'default string',
       someNum: 0.134,
@@ -204,7 +217,7 @@ describe('Record', () => {
   });
 
   it('should support iterables', () => {
-    let entity = new Entity({ someBool: false });
+    let entity = Entity.create({ someBool: false });
 
     expect(Object.entries(entity)).toEqual([
       ['someString', 'default string'],
@@ -219,16 +232,28 @@ describe('Record', () => {
   });
 
   it('should not allow assignment', () => {
-    let entity = new Entity({ someBool: false });
+    let entity = Entity.create({ someBool: false });
 
-    entity.someBool = null;
+    expect(Object.isFrozen(entity)).toBe(true);
 
-    expect(entity.someBool).toBe(false);
+    expect(() => {
+      entity.someBool = null;
+    }).toThrow(/Cannot assign/);
+
+    expect(() => {
+      entity.somethingElse = null;
+    }).toThrow(/Cannot add property/);
   });
 
   it('should support predefined getters', () => {
-    let entity = new Entity({ someString: 'abcde' });
+    let entity = Entity.create({ someString: 'abcde' });
 
     expect(entity.exclamation).toBe('abcde!');
+  });
+
+  it('should disallow use of constructor', () => {
+    expect(() => {
+      new Entity();
+    }).toThrow(/Use Class.create/);
   });
 });
