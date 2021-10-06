@@ -1,28 +1,28 @@
-let guard = Symbol('EmptyRecord');
-let values = Symbol('CustomValues');
+let GUARD = Symbol('EmptyRecord');
+let VALUES = Symbol('CustomValues');
 let callable = (v, m) => v != null && typeof v[m] === 'function';
 
 export class Record {
   static create(values = {}) {
-    let record = new this(guard);
-    Object.defineProperty(record, values, { value: values });
+    let record = new this(GUARD);
+    Object.defineProperty(record, VALUES, { value: values });
     Object.assign(record, values);
     return Object.freeze(record);
   }
 
   constructor(value) {
-    if (value !== guard) throw new Error('Use Class.create(...) method instead of `new` operator');
+    if (value !== GUARD) throw new Error('Use Class.create(...) method instead of `new` operator');
   }
 
   copy(patch) {
-    let values = Object.assign({}, this[values], patch);
+    let values = Object.assign({}, this[VALUES], patch);
     let prototype = Object.getPrototypeOf(this);
     return prototype.constructor.create(values);
   }
 
   equals(record) {
-    let va = this[values];
-    let vb = record[values];
+    let va = this[VALUES];
+    let vb = record[VALUES];
 
     for (let key in this) {
       let hasA = va.hasOwnProperty(key);
