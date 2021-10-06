@@ -359,4 +359,4 @@ The project is opened for any contributions (features, updates, fixes, etc) and 
 [the contributing guidelines](https://github.com/alexeyraspopov/dataclass/blob/master/CONTRIBUTING.md).
 
 The project is licensed under the
-[MIT](https://github.com/alexeyraspopov/dataclass/blob/master/LICENSE) license.
+[ISC](https://github.com/alexeyraspopov/dataclass/blob/master/LICENSE) license.

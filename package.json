@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "Immutable data transfer objects for JavaScript",
   "author": "Alexey Raspopov",
-  "license": "MIT",
+  "license": "ISC",
   "homepage": "https://dataclass.js.org/",
   "repository": "alexeyraspopov/dataclass",
   "main": "./dataclass.js",
