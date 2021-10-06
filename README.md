@@ -57,7 +57,7 @@ user == updated
 This library provides an abstract class `Record`:
 
 ```javascript
-import Record from 'dataclass';
+import { Record } from 'dataclass';
 ```
 
 Which allows to define custom data classes with their set of fields. Assuming, the user is aware of
@@ -76,28 +76,18 @@ class User extends Record {
 }
 ```
 
-Almost the same syntax is applicable to TypeScript:
-
-```typescript
-class User extends Record<User> {
-  name: string = 'Anonymous';
-  age: number = 0;
-}
-```
-
-With one small difference: `Record` is generic in TypeScript's typings due to
-[the issue with types in static fields](https://github.com/Microsoft/TypeScript/issues/5863).
-
-Providing a set of fields defines the class' API. New entity is created by using plain old `new`
-operator:
+Providing a set of fields defines the class' API. New entity is created by using static method
+`create()` provided by `Record`:
 
 ```javascript
-let userWithCustomValues = new User({ name: 'Liza', age: 23 });
+let userWithCustomValues = User.create({ name: 'Liza', age: 23 });
 // > User { name: 'Liza', age: 23 }
 
-let userWithDefaultValue = new User({ name: 'Ann' });
+let userWithDefaultValue = User.create({ name: 'Ann' });
 // > User { name: 'Ann', age: 0 }
 ```
+
+The ability to use `new` operator is prohibited since `Record` needs access to all properties.
 
 Created entity has all the fields' getters that return either custom or default value:
 
@@ -113,7 +103,7 @@ Whenever a change should be made, there is `copy()` method that has the same sig
 constructor, based on a fields definition:
 
 ```javascript
-let user = new User({ name: 'Ann' });
+let user = User.create({ name: 'Ann' });
 // > User { name: 'Ann', age: 0 }
 
 let updated = user.copy({ age: 28 });
@@ -128,8 +118,8 @@ always give `false` as a result. To compare the actual properties of the same cl
 `equals()` method should be used:
 
 ```javascript
-let userA = new User({ name: 'Ann' });
-let userB = new User({ name: 'Ann' });
+let userA = User.create({ name: 'Ann' });
+let userB = User.create({ name: 'Ann' });
 
 userA === userB;
 // > false
@@ -140,18 +130,7 @@ userA.equals(userB);
 
 All the API is fully compatible, so the code looks the same in JavaScript and TypeScript.
 
-If there is no option to use TypeScript or additional JavaScript transformations, plain constructor
-still can be used:
-
-```javascript
-class User extends Record {
-  constructor(data) {
-    super(data);
-    this.name = 'Anonymous';
-    this.age = 0;
-  }
-}
-```
+<!-- TODO mention class properties -->
 
 Often, models may have a set of additional getters that represent computed values based on raw data.
 They can be easily described as plain class' methods:
@@ -207,14 +186,14 @@ class Project extends Record {
 }
 ```
 
-### `constructor(data)`
+### `create(values)`
 
 Once extended, data class can be instantiated with a new data. That's the way to get a unique
 immutable persistent model.
 
 #### Arguments
 
-1.  `data` (_Object_): POJO which shape satisfy the contract described during class extension. If
+1.  `values` (_Object_): POJO which shape satisfy the contract described during class extension. If
     you use [Flow](https://flow.org), it will warn you about the mistakes.
 
 #### Returns
@@ -230,7 +209,7 @@ class Vehicle extends Record {
   manufacturer: string = '';
 }
 
-let vehicle = new Vehicle({ manufacturer: 'Tesla', model: 'S' });
+let vehicle = Vehicle.create({ manufacturer: 'Tesla', model: 'S' });
 // > Vehicle { manufacturer: 'Tesla', model: 'S' }
 
 vehicle.manufacturer;
@@ -259,7 +238,7 @@ class User extends Record {
   email: string = 'email@example.com';
 }
 
-let user = new User({ name: 'Liza' });
+let user = User.create({ name: 'Liza' });
 // > User { name: 'Liza', email: 'email@example.com' }
 
 let updated = user.copy({ email: 'liza@example.com' });
@@ -289,8 +268,8 @@ class Box extends Record {
   color: string = 'red';
 }
 
-let first = new Box({ color: 'green' });
-let second = new Box({ color: 'blue' });
+let first = Box.create({ color: 'green' });
+let second = Box.create({ color: 'blue' });
 let third = first.copy({ color: 'blue' });
 
 first === second;
@@ -319,7 +298,7 @@ class User extends Record {
   static from(data: Object): User {
     let name: string = data.name;
     let age: number = parseInt(data.age, 10);
-    return new User({ name, age });
+    return User.create({ name, age });
   }
 }
 
@@ -342,7 +321,7 @@ class User extends Record {
   }
 }
 
-let user = new User({ name: 'Liza', age: 23 });
+let user = User.create({ name: 'Liza', age: 23 });
 // > User { name: 'Liza', age: 23 }
 
 JSON.stringify(user);
