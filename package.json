@@ -6,13 +6,12 @@
   "license": "MIT",
   "homepage": "https://dataclass.js.org/",
   "repository": "alexeyraspopov/dataclass",
-  "main": "build/dataclass.js",
-  "module": "build/dataclass.module.js",
-  "types": "typings/dataclass.d.ts",
+  "main": "./dataclass.js",
+  "module": "./dataclass.module.js",
+  "types": "./dataclass.d.ts",
+  "sideEffects": false,
   "files": [
-    "build/",
-    "typings/",
-    "LICENSE"
+    "dataclass.*"
   ],
   "keywords": [
     "immutable",
@@ -22,22 +21,19 @@
   ],
   "scripts": {
     "test": "jest --coverage",
-    "ci": "sh scripts/integration.sh",
-    "prepublish": "./scripts/publish.sh"
+    "build": "rollup --config rollup.config.js"
   },
   "devDependencies": {
-    "babel-core": "~6.25.0",
-    "babel-jest": "^22.4.3",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-class-properties": "~6.24.1",
-    "babel-plugin-transform-flow-strip-types": "~6.22.0",
-    "babel-preset-env": "^1.6.1",
-    "jest": "^22.4.3",
-    "jest-junit": "^3.6.0",
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-flow": "^7.14.5",
+    "jest": "^27.2.4",
     "prettier": "^2.4.1",
-    "rollup": "^0.57.1",
+    "rollup": "^2.58.0",
     "rollup-plugin-babel": "^3.0.3",
-    "size-limit": "^0.17.0"
+    "rollup-plugin-bundle-size": "^1.0.3",
+    "rollup-plugin-copy": "^3.4.0"
   },
   "prettier": {
     "printWidth": 100,
@@ -48,30 +44,17 @@
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "targets": {
-            "node": "8.9.4"
+            "node": "current"
           }
         }
-      ]
-    ],
-    "plugins": [
-      "transform-class-properties",
-      "transform-flow-strip-types"
+      ],
+      "@babel/preset-flow"
     ]
   },
   "jest": {
     "testEnvironment": "node"
-  },
-  "size-limit": [
-    {
-      "limit": "457 B",
-      "path": "build/dataclass.js"
-    },
-    {
-      "limit": "465 B",
-      "path": "build/dataclass.module.js"
-    }
-  ]
+  }
 }
