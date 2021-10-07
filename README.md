@@ -2,7 +2,7 @@
 
     npm install dataclass
 
-Syntax sugar that leverages the power of available type systems in JavaScript and TypeScript to
+Syntax sugar that leverages the power of available type systems in TypeScript and JavaScript to
 provide an effortless way for defining data structures of domain models and data transfer objects
 that are immutable and persistent.
 
@@ -65,9 +65,10 @@ type systems and have one enabled for their project, this library does not do an
 runtime. This means less overhead for the things, that have to be preserved in compile time or by a
 safety net of tests.
 
-The peak of developer experience can be achieved by writing JavaScript that is extended by
-[class properties](https://github.com/tc39/proposal-class-fields) and [flowtype](https://flow.org).
-This allows to write a class with a set of fields following by their types and default values:
+The peak of developer experience can be achieved by using TypeScript or JavaScript that is extended
+by [class properties](https://github.com/tc39/proposal-class-fields) and
+[flowtype](https://flow.org). This allows to write a class with a set of fields following by their
+types and default values:
 
 ```javascript
 class User extends Data {
@@ -75,18 +76,6 @@ class User extends Data {
   age: number = 0;
 }
 ```
-
-Almost the same syntax is applicable to TypeScript:
-
-```typescript
-class User extends Data<User> {
-  name: string = 'Anonymous';
-  age: number = 0;
-}
-```
-
-With one small difference: `Data` is generic in TypeScript's typings due to
-[the issue with types in static fields](https://github.com/Microsoft/TypeScript/issues/5863).
 
 Providing a set of fields defines the class' API. New entity is created by using static method
 `create()` provided by `Data`:

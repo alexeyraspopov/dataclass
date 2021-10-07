@@ -1,3 +1,4 @@
+/* @flow */
 declare export class Data {
   static create(custom?: $Shape<this>): this;
   copy(patch: $Shape<this>): this;
