@@ -14,14 +14,14 @@ actions:
 features:
   - title: Lightweight
     details:
-      The library is less than 500B after build min+gzip while still providing a lot of flexibility
-      and typings
+      The library takes less than 600B in your bundle (min+gzip) while still providing a lot of
+      flexibility and typings
   - title: Immutable
-    details: The power of value objects is based on the convention that objects do not mutate
+    details: The power of value objects is based on a simple convention that objects never mutate
   - title: Delightful
     details:
-      The library is built with developer experience in mind. Things should be easy to implement and
-      the tools should provide meaningful feedback
+      The project is built with developer experience in mind. Coding should be easy and dataclass is
+      here to help
 footer:
   Made by <a href="https://twitter.com/alexeyraspopov" rel="noopener noreferrer"
   target="_blank">Alexey Raspopov</a> with ❤️
