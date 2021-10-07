@@ -3,8 +3,7 @@
     npm install dataclass
 
 Syntax sugar that leverages the power of available type systems in TypeScript and JavaScript to
-provide an effortless way for defining data structures of domain models and data transfer objects
-that are immutable and persistent.
+provide an effortless way for defining value objects that are immutable and persistent.
 
 - [Prior Art](#prior-art)
 - [Getting Started](#getting-started)
@@ -17,19 +16,19 @@ that are immutable and persistent.
 The implemented concept is heavily inspired by Scala and Kotlin. Both languages have the
 implementation of data classes as a part of their syntax and share similar APIs.
 
-See [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) in Scala:
-
-```scala
-case class User(name: String = "Anonymous", age: Int = 0)
-```
-
-And [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) in Kotlin:
+See [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) in Kotlin:
 
 ```kotlin
 data class User(val name: String = "Anonymous", val age: Int = 0)
 ```
 
+And [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) in Scala:
+
 ```scala
+case class User(name: String = "Anonymous", age: Int = 0)
+```
+
+```kotlin
 val user = User(name = "Liza", age = 23)
 val updated = user.copy(name = "Ann")
 
@@ -155,8 +154,8 @@ class User extends Data {
 Getters may receive arguments, however it is recommended to keep them primitive, so a model
 [won't know](https://en.wikipedia.org/wiki/Law_of_Demeter) about some others' internals.
 
-When you're modeling complex domains, you may find the need to have one record as a part of another
-record. This library supports it seamlessly:
+When you're modeling complex domains, you may find the need to have one data class as a part of
+another data class. This library supports it seamlessly:
 
 ```javascript
 class Url extends Data {
@@ -199,7 +198,7 @@ immutable persistent model.
 
 #### Returns
 
-(_Record_): an instance of your data class with all the defined fields accessible as in the plain
+(_Data_): an instance of your data class with all the defined fields accessible as in the plain
 object. Properties are read only.
 
 #### Example
@@ -217,19 +216,19 @@ vehicle.manufacturer;
 // > 'Tesla'
 ```
 
-### `copy(patch)`
+### `copy(values)`
 
 Create new immutable instance based on an existent one. Since properties are read only, that's the
 way to provide an updated model's fields to a consumer keeping the rest unchanged.
 
 #### Arguments
 
-1.  `patch` (_Record_): POJO that includes new values that you want to change. Properties should
+1.  `values` (_Data_): POJO that includes new values that you want to change. Properties should
     satisfy the contract described by the class.
 
 #### Returns
 
-(_Record_): new instance of the same type and with new values.
+(_Data_): new instance of the same type and with new values.
 
 #### Example
 
@@ -246,20 +245,20 @@ let updated = user.copy({ email: 'liza@example.com' });
 // > User { name: 'Liza', email: 'liza@example.com' }
 ```
 
-### `equals(record)`
+### `equals(other)`
 
 Since immutable instances always have not equal references, there should be a way to compare the
 actual values.
 
 #### Arguments
 
-1.  `record` (_Object_): a record of the same type as a target one.
+1.  `other` (_Data_): a data class of the same type as the target one.
 
 #### Returns
 
 (_Boolean_): `false` if some field value is not
-[strictly equal](https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6) in both records.
-`true` otherwise.
+[strictly equal](https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6) in both data
+instances. `true` otherwise.
 
 #### Example
 

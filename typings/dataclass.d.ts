@@ -1,6 +1,6 @@
 export class Data {
-  static create<Type extends Data>(this: { new (): Type }, custom?: Partial<Type>): Type;
-  copy(patch: Partial<this>): this;
-  equals(record: this): boolean;
+  static create<Type extends Data>(this: { new (): Type }, values?: Partial<Type>): Type;
+  copy(values: Partial<this>): this;
+  equals(other: this): boolean;
   toJSON(): Object;
 }

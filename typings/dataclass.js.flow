@@ -1,7 +1,7 @@
 /* @flow */
 declare export class Data {
-  static create(custom?: $Shape<this>): this;
-  copy(patch: $Shape<this>): this;
-  equals(record: this): boolean;
+  static create(values?: $Shape<this>): this;
+  copy(values: $Shape<this>): this;
+  equals(other: this): boolean;
   toJSON(): Object;
 }
