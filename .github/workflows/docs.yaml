@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 16
       - name: Install docs-related dependencies
-        run: cd docs && npm install && cd ..
+        run: cd docs && npm install && npm run build && cd ..
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
