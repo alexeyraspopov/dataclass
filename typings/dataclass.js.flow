@@ -1,4 +1,4 @@
-declare export class Record {
+declare export class Data {
   static create(custom?: $Shape<this>): this;
   copy(patch: $Shape<this>): this;
   equals(record: this): boolean;

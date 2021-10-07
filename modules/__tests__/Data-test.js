@@ -1,8 +1,8 @@
 /* @flow */
-import { Record } from '../Record.js';
+import { Data } from '../Data.js';
 
-describe('Record', () => {
-  class Entity extends Record {
+describe('Data', () => {
+  class Entity extends Data {
     someString: string = 'default string';
     someNum: number = 0.134;
     someBool: boolean = true;
@@ -69,7 +69,7 @@ describe('Record', () => {
   });
 
   it('should support polymorphism', () => {
-    class Base extends Record {
+    class Base extends Data {
       format: string = 'AAA';
 
       transform(value) {
@@ -126,7 +126,7 @@ describe('Record', () => {
     expect(entityB.equals(entityC)).toBe(false);
   });
 
-  class Embedded extends Record {
+  class Embedded extends Data {
     name: string = 'name';
     age: number = 1;
     entity: Entity = Entity.create();

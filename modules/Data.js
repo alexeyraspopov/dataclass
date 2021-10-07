@@ -1,8 +1,8 @@
-let GUARD = Symbol('EmptyRecord');
-let VALUES = Symbol('CustomValues');
+let GUARD = Symbol('Empty');
+let VALUES = Symbol('Values');
 let callable = (v, m) => v != null && typeof v[m] === 'function';
 
-export class Record {
+export class Data {
   static create(values = {}) {
     let record = new this(GUARD);
     Object.defineProperty(record, VALUES, { value: values });

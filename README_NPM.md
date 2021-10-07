@@ -5,9 +5,9 @@ provide an effortless way for defining data structures of domain models and data
 that are immutable and persistent.
 
 ```javascript
-import { Record } from "dataclass";
+import { Data } from "dataclass";
 
-class User extends Record {
+class User extends Data {
   name: string = "Anon";
   age: number = 25;
 }

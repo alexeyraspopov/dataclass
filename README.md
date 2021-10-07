@@ -54,10 +54,10 @@ user == updated
 
 ## Getting Started
 
-This library provides an abstract class `Record`:
+This library provides an abstract class `Data`:
 
 ```javascript
-import { Record } from 'dataclass';
+import { Data } from 'dataclass';
 ```
 
 Which allows to define custom data classes with their set of fields. Assuming, the user is aware of
@@ -70,14 +70,26 @@ The peak of developer experience can be achieved by writing JavaScript that is e
 This allows to write a class with a set of fields following by their types and default values:
 
 ```javascript
-class User extends Record {
+class User extends Data {
   name: string = 'Anonymous';
   age: number = 0;
 }
 ```
 
+Almost the same syntax is applicable to TypeScript:
+
+```typescript
+class User extends Data<User> {
+  name: string = 'Anonymous';
+  age: number = 0;
+}
+```
+
+With one small difference: `Data` is generic in TypeScript's typings due to
+[the issue with types in static fields](https://github.com/Microsoft/TypeScript/issues/5863).
+
 Providing a set of fields defines the class' API. New entity is created by using static method
-`create()` provided by `Record`:
+`create()` provided by `Data`:
 
 ```javascript
 let userWithCustomValues = User.create({ name: 'Liza', age: 23 });
@@ -87,7 +99,7 @@ let userWithDefaultValue = User.create({ name: 'Ann' });
 // > User { name: 'Ann', age: 0 }
 ```
 
-The ability to use `new` operator is prohibited since `Record` needs access to all properties.
+The ability to use `new` operator is prohibited since `Data` needs access to all properties.
 
 Created entity has all the fields' getters that return either custom or default value:
 
@@ -136,7 +148,7 @@ Often, models may have a set of additional getters that represent computed value
 They can be easily described as plain class' methods:
 
 ```javascript
-class User extends Record {
+class User extends Data {
   firstName: string = 'John';
   lastName: string = 'Doe';
   age: number = 0;
@@ -158,19 +170,19 @@ When you're modeling complex domains, you may find the need to have one record a
 record. This library supports it seamlessly:
 
 ```javascript
-class Url extends Record {
+class Url extends Data {
   protocol: string = 'https';
   hostname: string;
 }
 
-class Server extends Record {
+class Server extends Data {
   location: Url;
 }
 ```
 
 ## API Reference
 
-### `Record`
+### `Data`
 
 Base class for domain models. Should be extended with a set of class fields that describe the shape
 of desired model.
@@ -178,7 +190,7 @@ of desired model.
 #### Example
 
 ```javascript
-class Project extends Record {
+class Project extends Data {
   id: string = '';
   name: string = 'Untitled Project';
   createdBy: string = '';
@@ -204,7 +216,7 @@ object. Properties are read only.
 #### Example
 
 ```javascript
-class Vehicle extends Record {
+class Vehicle extends Data {
   model: string = '';
   manufacturer: string = '';
 }
@@ -233,7 +245,7 @@ way to provide an updated model's fields to a consumer keeping the rest unchange
 #### Example
 
 ```javascript
-class User extends Record {
+class User extends Data {
   name: string = 'Anonymous';
   email: string = 'email@example.com';
 }
@@ -263,7 +275,7 @@ actual values.
 #### Example
 
 ```javascript
-class Box extends Record {
+class Box extends Data {
   size: number = 16;
   color: string = 'red';
 }
@@ -291,7 +303,7 @@ In cases where the input data cannot be determined (API requests) or there shoul
 data preparation done, it is recommended to provide custom and agnostic static methods:
 
 ```javascript
-class User extends Record {
+class User extends Data {
   name: string = 'Anonymous';
   age: number = 0;
 
@@ -312,7 +324,7 @@ In the same way, defined `toJSON()` and `toString()` will behave as expected in 
 can be used for model serialization:
 
 ```javascript
-class User extends Record {
+class User extends Data {
   name: string = 'Anonymous';
   age: number = 0;
 
