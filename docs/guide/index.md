@@ -2,9 +2,8 @@
 
     npm install dataclass@beta
 
-Syntax sugar that leverages the power of available type systems in JavaScript and TypeScript to
-provide an effortless way for defining data structures of domain models and data transfer objects
-that are immutable and persistent.
+Syntax sugar that leverages the power of available type systems in TypeScript and JavaScript to
+provide an effortless way for defining value objects that are immutable and persistent.
 
 ## Prior Art
 

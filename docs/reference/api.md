@@ -8,6 +8,8 @@ of desired model.
 #### Example
 
 ```ts
+import { Data } from 'dataclass';
+
 class Project extends Data {
 	id: string = '';
 	name: string = 'Untitled Project';
@@ -46,7 +48,7 @@ vehicle.manufacturer;
 // > 'Tesla'
 ```
 
-### method `copy(patch)`
+### method `copy(values)`
 
 Create new immutable instance based on an existent one. Since properties are read only, that's the
 way to provide an updated model's fields to a consumer keeping the rest unchanged.
