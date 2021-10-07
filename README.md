@@ -1,34 +1,41 @@
-# Data Class
+# dataclass
 
-    npm install dataclass
+    npm install dataclass@beta
 
 Syntax sugar that leverages the power of available type systems in TypeScript and JavaScript to
 provide an effortless way for defining value objects that are immutable and persistent.
 
-- [Prior Art](#prior-art)
-- [Getting Started](#getting-started)
-- [API Reference](#api-reference)
-- [Serialization & Deserialization](#serialization--deserialization)
-- [Contributing](#contributing)
+Read full docs [on the website](https://dataclass.js.org).
+
+```ts
+import { Data } from 'dataclass';
+
+class User extends Data {
+  name: string = 'Anon';
+  age: number = 25;
+}
+
+let user = User.create({ name: 'Liza', age: 23 });
+// > User { name: "Liza", age: 23 }
+
+let updated = user.copy({ name: 'Ann' });
+// > User { name: "Ann", age: 23 }
+
+let isEqual = user.equals(updated);
+// > false
+```
 
 ## Prior Art
 
 The implemented concept is heavily inspired by Scala and Kotlin. Both languages have the
 implementation of data classes as a part of their syntax and share similar APIs.
 
-See [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) in Kotlin:
+See [Data Classes](https://kotlinlang.org/docs/reference/data-classes.html) in Kotlin (also
+[Case Classes](https://docs.scala-lang.org/tour/case-classes.html) in Scala):
 
 ```kotlin
 data class User(val name: String = "Anonymous", val age: Int = 0)
-```
 
-And [Case Classes](https://docs.scala-lang.org/tour/case-classes.html) in Scala:
-
-```scala
-case class User(name: String = "Anonymous", age: Int = 0)
-```
-
-```kotlin
 val user = User(name = "Liza", age = 23)
 val updated = user.copy(name = "Ann")
 
@@ -51,290 +58,10 @@ updated = replace(user, name='Ann')
 user == updated
 ```
 
-## Getting Started
-
-This library provides an abstract class `Data`:
-
-```javascript
-import { Data } from 'dataclass';
-```
-
-Which allows to define custom data classes with their set of fields. Assuming, the user is aware of
-type systems and have one enabled for their project, this library does not do any type checks in
-runtime. This means less overhead for the things, that have to be preserved in compile time or by a
-safety net of tests.
-
-The peak of developer experience can be achieved by using TypeScript or JavaScript that is extended
-by [class properties](https://github.com/tc39/proposal-class-fields) and
-[flowtype](https://flow.org). This allows to write a class with a set of fields following by their
-types and default values:
-
-```javascript
-class User extends Data {
-  name: string = 'Anonymous';
-  age: number = 0;
-}
-```
-
-Providing a set of fields defines the class' API. New entity is created by using static method
-`create()` provided by `Data`:
-
-```javascript
-let userWithCustomValues = User.create({ name: 'Liza', age: 23 });
-// > User { name: 'Liza', age: 23 }
-
-let userWithDefaultValue = User.create({ name: 'Ann' });
-// > User { name: 'Ann', age: 0 }
-```
-
-The ability to use `new` operator is prohibited since `Data` needs access to all properties.
-
-Created entity has all the fields' getters that return either custom or default value:
-
-```javascript
-// custom value provided to constructor
-userWithCustomValues.name === 'Liza';
-
-// default value used from the model definition
-userWithDefaultValue.age === 0;
-```
-
-Whenever a change should be made, there is `copy()` method that has the same signature as
-constructor, based on a fields definition:
-
-```javascript
-let user = User.create({ name: 'Ann' });
-// > User { name: 'Ann', age: 0 }
-
-let updated = user.copy({ age: 28 });
-// > User { name: 'Ann', age: 28 }
-```
-
-This method returns a new entity built upon previous set of values. The target of `copy()` calls is
-not changed, by the definition of persistence.
-
-Since all the entities of one class are unique by their object reference, comparison operator will
-always give `false` as a result. To compare the actual properties of the same class' entities,
-`equals()` method should be used:
-
-```javascript
-let userA = User.create({ name: 'Ann' });
-let userB = User.create({ name: 'Ann' });
-
-userA === userB;
-// > false
-
-userA.equals(userB);
-// > true
-```
-
-All the API is fully compatible, so the code looks the same in JavaScript and TypeScript.
-
-<!-- TODO mention class properties -->
-
-Often, models may have a set of additional getters that represent computed values based on raw data.
-They can be easily described as plain class' methods:
-
-```javascript
-class User extends Data {
-  firstName: string = 'John';
-  lastName: string = 'Doe';
-  age: number = 0;
-
-  isAdult() {
-    return this.age >= 18;
-  }
-
-  getFullName() {
-    return `${this.firstName} ${this.lastName}`;
-  }
-}
-```
-
-Getters may receive arguments, however it is recommended to keep them primitive, so a model
-[won't know](https://en.wikipedia.org/wiki/Law_of_Demeter) about some others' internals.
-
-When you're modeling complex domains, you may find the need to have one data class as a part of
-another data class. This library supports it seamlessly:
-
-```javascript
-class Url extends Data {
-  protocol: string = 'https';
-  hostname: string;
-}
-
-class Server extends Data {
-  location: Url;
-}
-```
-
-## API Reference
-
-### `Data`
-
-Base class for domain models. Should be extended with a set of class fields that describe the shape
-of desired model.
-
-#### Example
-
-```javascript
-class Project extends Data {
-  id: string = '';
-  name: string = 'Untitled Project';
-  createdBy: string = '';
-  createdAt: Date = null;
-}
-```
-
-### `create(values)`
-
-Once extended, data class can be instantiated with a new data. That's the way to get a unique
-immutable persistent model.
-
-#### Arguments
-
-1.  `values` (_Object_): POJO which shape satisfy the contract described during class extension. If
-    you use [Flow](https://flow.org), it will warn you about the mistakes.
-
-#### Returns
-
-(_Data_): an instance of your data class with all the defined fields accessible as in the plain
-object. Properties are read only.
-
-#### Example
-
-```javascript
-class Vehicle extends Data {
-  model: string = '';
-  manufacturer: string = '';
-}
-
-let vehicle = Vehicle.create({ manufacturer: 'Tesla', model: 'S' });
-// > Vehicle { manufacturer: 'Tesla', model: 'S' }
-
-vehicle.manufacturer;
-// > 'Tesla'
-```
-
-### `copy(values)`
-
-Create new immutable instance based on an existent one. Since properties are read only, that's the
-way to provide an updated model's fields to a consumer keeping the rest unchanged.
-
-#### Arguments
-
-1.  `values` (_Data_): POJO that includes new values that you want to change. Properties should
-    satisfy the contract described by the class.
-
-#### Returns
-
-(_Data_): new instance of the same type and with new values.
-
-#### Example
-
-```javascript
-class User extends Data {
-  name: string = 'Anonymous';
-  email: string = 'email@example.com';
-}
-
-let user = User.create({ name: 'Liza' });
-// > User { name: 'Liza', email: 'email@example.com' }
-
-let updated = user.copy({ email: 'liza@example.com' });
-// > User { name: 'Liza', email: 'liza@example.com' }
-```
-
-### `equals(other)`
-
-Since immutable instances always have not equal references, there should be a way to compare the
-actual values.
-
-#### Arguments
-
-1.  `other` (_Data_): a data class of the same type as the target one.
-
-#### Returns
-
-(_Boolean_): `false` if some field value is not
-[strictly equal](https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.6) in both data
-instances. `true` otherwise.
-
-#### Example
-
-```javascript
-class Box extends Data {
-  size: number = 16;
-  color: string = 'red';
-}
-
-let first = Box.create({ color: 'green' });
-let second = Box.create({ color: 'blue' });
-let third = first.copy({ color: 'blue' });
-
-first === second;
-// > false
-
-first === third;
-// > false
-
-first.equals(second);
-// > false
-
-second.equals(third);
-// > true
-```
-
-## Serialization & Deserialization
-
-In cases where the input data cannot be determined (API requests) or there should be some additional
-data preparation done, it is recommended to provide custom and agnostic static methods:
-
-```javascript
-class User extends Data {
-  name: string = 'Anonymous';
-  age: number = 0;
-
-  static from(data: Object): User {
-    let name: string = data.name;
-    let age: number = parseInt(data.age, 10);
-    return User.create({ name, age });
-  }
-}
-
-let user = User.from({ name: 'Liza', age: '18', someUnusedFlag: true });
-```
-
-That's how native things handle these cases: see
-[`Array.from()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
-
-In the same way, defined `toJSON()` and `toString()` will behave as expected in JavaScript, so they
-can be used for model serialization:
-
-```javascript
-class User extends Data {
-  name: string = 'Anonymous';
-  age: number = 0;
-
-  toJSON(): Object {
-    return { name: this.name, age: this.age };
-  }
-}
-
-let user = User.create({ name: 'Liza', age: 23 });
-// > User { name: 'Liza', age: 23 }
-
-JSON.stringify(user);
-// > { "name": "Liza", "age": 23 }
-```
-
-By default, a model will be serialized to a plain object with all the fields as is, so there is no
-need to implement `toJSON()` from example above.
-
 ## Contributing
 
-The project is opened for any contributions (features, updates, fixes, etc) and is
-[located](https://github.com/alexeyraspopov/dataclass) on GitHub. If you're interested, please check
+The project is opened for any contributions (features, updates, fixes, etc). If you're interested,
+please check
 [the contributing guidelines](https://github.com/alexeyraspopov/dataclass/blob/master/CONTRIBUTING.md).
 
 The project is licensed under the

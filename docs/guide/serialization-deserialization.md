@@ -5,14 +5,14 @@ data preparation done, it is recommended to provide custom and agnostic static m
 
 ```ts
 class User extends Data {
-	name: string = 'Anonymous';
-	age: number = 0;
+  name: string = 'Anonymous';
+  age: number = 0;
 
-	static from(data: Object): User {
-		let name: string = data.name;
-		let age: number = parseInt(data.age, 10);
-		return User.create({ name, age });
-	}
+  static from(data: Object): User {
+    let name: string = data.name;
+    let age: number = parseInt(data.age, 10);
+    return User.create({ name, age });
+  }
 }
 
 let user = User.from({ name: 'Liza', age: '18', someUnusedFlag: true });
@@ -26,12 +26,12 @@ can be used for model serialization:
 
 ```ts
 class User extends Data {
-	name: string = 'Anonymous';
-	age: number = 0;
+  name: string = 'Anonymous';
+  age: number = 0;
 
-	toJSON(): Object {
-		return { name: this.name, age: this.age };
-	}
+  toJSON(): Object {
+    return { name: this.name, age: this.age };
+  }
 }
 
 let user = User.create({ name: 'Liza', age: 23 });

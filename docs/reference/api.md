@@ -11,10 +11,10 @@ of desired model.
 import { Data } from 'dataclass';
 
 class Project extends Data {
-	id: string = '';
-	name: string = 'Untitled Project';
-	createdBy: string = '';
-	createdAt: Date = null;
+  id: string = '';
+  name: string = 'Untitled Project';
+  createdBy: string = '';
+  createdAt: Date = null;
 }
 ```
 
@@ -37,8 +37,8 @@ object. Properties are read only.
 
 ```ts
 class Vehicle extends Data {
-	model: string = '';
-	manufacturer: string = '';
+  model: string = '';
+  manufacturer: string = '';
 }
 
 let vehicle = Vehicle.create({ manufacturer: 'Tesla', model: 'S' });
@@ -66,8 +66,8 @@ way to provide an updated model's fields to a consumer keeping the rest unchange
 
 ```ts
 class User extends Data {
-	name: string = 'Anonymous';
-	email: string = 'email@example.com';
+  name: string = 'Anonymous';
+  email: string = 'email@example.com';
 }
 
 let user = User.create({ name: 'Liza' });
@@ -96,8 +96,8 @@ actual values.
 
 ```ts
 class Box extends Data {
-	size: number = 16;
-	color: string = 'red';
+  size: number = 16;
+  color: string = 'red';
 }
 
 let first = Box.create({ color: 'green' });
