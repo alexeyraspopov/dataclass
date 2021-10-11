@@ -5,9 +5,6 @@ actions:
   - text: Get Started
     link: /guide/
     type: primary
-  - text: API Reference
-    link: /reference/api.html
-    type: secondary
   - text: GitHub
     link: https://github.com/alexeyraspopov/dataclass
     type: secondary

@@ -18,7 +18,7 @@ module.exports = {
         link: '/guide/',
       },
       {
-        text: 'API Reference',
+        text: 'Reference',
         link: '/reference/api.html',
       },
     ],
@@ -29,8 +29,10 @@ module.exports = {
           text: 'Guide',
           children: [
             '/guide/index.md',
+            '/guide/installation.md',
             '/guide/getting-started.md',
             '/guide/serialization-deserialization.md',
+            '/guide/migrating.md',
             '/guide/contributing.md',
           ],
         },
