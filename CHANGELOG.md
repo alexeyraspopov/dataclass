@@ -2,6 +2,8 @@
 
 ## [`v2.0.0`](https://github.com/alexeyraspopov/dataclass/releases/tag/v2.0.0)
 
+- Dataclass is now licensed under [ISC License](https://en.wikipedia.org/wiki/ISC_license)  
+  https://github.com/alexeyraspopov/dataclass/blob/master/LICENSE
 - **Breaking:** the utility class has been renamed from `Record` to `Data`
   - "Record" now means a lot of other things in the ecosystem
 - **Breaking:** use `.create()` static method instead of `new` operator
