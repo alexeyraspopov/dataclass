@@ -45,8 +45,34 @@ Dataclass v2 uses new implementation for class instantiation due to some browser
 
 ## Ensure no mutations happening in the code
 
-Mutation is not silent _TODO_
+While instance of data classes treated as immutable, the implementation still uses some safety
+precautions to ensure no mutations (accidental or intentional) can be made. In v1, when a prop is
+mutated, nothing happens, the value remains the same. The operation is basically ignored.
+
+```ts:no-line-numbers
+let user = new User({ age: 18 });
+
+user.age = 100;
+
+console.log(user.age);
+// > 18
+```
+
+In v2, however, some additional precautions were made, to ensure that developers can spot bad code
+and mistakes. Mutating a property will now throw an error:
+
+```ts:no-line-numbers
+let user = new User({ age: 18 });
+
+user.age = 100;
+// Uncaught TypeError: "age" is read-only
+```
+
+This error comes from the use of
+[`Object.freeze()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
+which throws an error when there was an attempt to mutate an existing property and when the user
+tries to add new property to the object.
 
 ## Make sure the dependency is transpiled, if necessary
 
-See [Installation Guide](./installation.md#troubleshooting) for more details.
+See [Installation Guide & Troubleshooting](./installation.md#troubleshooting) for more details.

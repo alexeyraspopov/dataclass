@@ -3,9 +3,17 @@ module.exports = {
 
   head: [
     ['meta', { name: 'theme-color', content: '#4770eb' }],
+    [
+      'meta',
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' },
+    ],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }],
   ],
+
+  theme: '@vuepress/theme-default',
+  bundler: '@vuepress/bundler-vite',
+  plugins: ['@vuepress/plugin-search'],
 
   themeConfig: {
     repo: 'alexeyraspopov/dataclass',
@@ -19,7 +27,7 @@ module.exports = {
       },
       {
         text: 'Reference',
-        link: '/reference/api.html',
+        link: '/reference/',
       },
     ],
 
@@ -40,12 +48,9 @@ module.exports = {
       '/reference/': [
         {
           text: 'Reference',
-          children: ['/reference/api.md'],
+          children: ['/reference/index.md'],
         },
       ],
     },
   },
-
-  bundler: '@vuepress/vite',
-  plugins: ['@vuepress/plugin-search'],
 };
