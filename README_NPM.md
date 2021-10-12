@@ -3,7 +3,7 @@ TypeScript and JavaScript.
 
 Read full docs [on the homepage](https://dataclass.js.org).
 
-```ts
+```javascript
 import { Data } from "dataclass";
 
 // 1. easily describe your data classes using just language features

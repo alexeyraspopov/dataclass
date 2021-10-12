@@ -1,10 +1,10 @@
 {
   "name": "dataclass",
-  "version": "1.2.0",
-  "description": "Immutable data transfer objects for JavaScript",
+  "version": "2.0.0",
+  "description": "Data classes for TypeScript & JavaScript",
   "author": "Alexey Raspopov",
   "license": "ISC",
-  "homepage": "https://dataclass.js.org/",
+  "homepage": "https://dataclass.js.org",
   "repository": "alexeyraspopov/dataclass",
   "main": "./dataclass.js",
   "module": "./dataclass.module.js",
