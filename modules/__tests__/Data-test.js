@@ -243,6 +243,6 @@ describe('Data', () => {
   it('should disallow use of constructor', () => {
     expect(() => {
       new Entity();
-    }).toThrow(/Use Class.create/);
+    }).toThrow(/Use Entity.create/);
   });
 });

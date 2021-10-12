@@ -10,7 +10,9 @@ export class Data {
   }
 
   constructor(values) {
-    if (values !== GUARD) throw new Error('Use Class.create(...) method instead of `new` operator');
+    if (values !== GUARD) {
+      throw new Error("Use " + this.constructor.name + ".create(...) instead of `new` operator");
+    }
   }
 
   copy(values) {
