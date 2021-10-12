@@ -16,7 +16,7 @@ describe('Data', () => {
   it('should create an entity with default values', () => {
     let entity = Entity.create();
 
-    expect(entity.toJSON()).toEqual({
+    expect(entity).toEqual({
       someString: 'default string',
       someNum: 0.134,
       someBool: true,
@@ -41,7 +41,7 @@ describe('Data', () => {
     let right = entity.copy({ someNum: 13 }).copy({ someBool: false });
 
     expect(left).toEqual(right);
-    expect(left.toJSON()).toEqual(right.toJSON());
+    expect(left.equals(right)).toBe(true);
   });
 
   it('should support subclassing', () => {

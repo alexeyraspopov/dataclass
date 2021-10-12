@@ -1,6 +1,5 @@
 let GUARD = Symbol('Empty');
 let VALUES = Symbol('Values');
-let callable = (v, m) => v != null && typeof v[m] === 'function';
 
 export class Data {
   static create(values = {}) {
@@ -31,9 +30,8 @@ export class Data {
         let a = hasA ? va[key] : this[key];
         let b = hasB ? vb[key] : other[key];
         if (a !== b) {
-          if (callable(a, 'equals') && callable(b, 'equals')) {
-            if (!a.equals(b)) return false;
-          } else if (callable(a, 'valueOf') && callable(b, 'valueOf')) {
+          if (a != null && b != null) {
+            if (a instanceof Data && b instanceof Data && a.equals(b)) continue;
             if (a.valueOf() !== b.valueOf()) return false;
           } else return false;
         }
@@ -41,9 +39,5 @@ export class Data {
     }
 
     return true;
-  }
-
-  toJSON() {
-    return Object.assign({}, this);
   }
 }

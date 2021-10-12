@@ -3,5 +3,4 @@ declare export class Data {
   static create(values?: $Shape<this>): this;
   copy(values: $Shape<this>): this;
   equals(other: this): boolean;
-  toJSON(): Object;
 }
