@@ -5,17 +5,17 @@ The library intents to bring flexibility and usefulness of data classes from Kot
 Python to TypeScript and JavaScript.
 
 ```javascript
-import { Data } from 'dataclass';
+import { Data } from "dataclass";
 
 class User extends Data {
-  name: string = 'Anon';
+  name: string = "Anon";
   age: number = 25;
 }
 
-let user = User.create({ name: 'Liza', age: 23 });
+let user = User.create({ name: "Liza", age: 23 });
 // > User { name: "Liza", age: 23 }
 
-let updated = user.copy({ name: 'Ann' });
+let updated = user.copy({ name: "Ann" });
 // > User { name: "Ann", age: 23 }
 
 let isEqual = user.equals(updated);

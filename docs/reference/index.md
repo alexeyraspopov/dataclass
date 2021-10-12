@@ -8,12 +8,12 @@ of desired model.
 #### Example
 
 ```ts
-import { Data } from 'dataclass';
+import { Data } from "dataclass";
 
 class Project extends Data {
-  id: string = '';
-  name: string = 'Untitled Project';
-  createdBy: string = '';
+  id: string = "";
+  name: string = "Untitled Project";
+  createdBy: string = "";
   createdAt: Date = null;
 }
 ```
@@ -37,11 +37,11 @@ object. Properties are read only.
 
 ```ts
 class Vehicle extends Data {
-  model: string = '';
-  manufacturer: string = '';
+  model: string = "";
+  manufacturer: string = "";
 }
 
-let vehicle = Vehicle.create({ manufacturer: 'Tesla', model: 'S' });
+let vehicle = Vehicle.create({ manufacturer: "Tesla", model: "S" });
 // > Vehicle { manufacturer: 'Tesla', model: 'S' }
 
 vehicle.manufacturer;
@@ -66,14 +66,14 @@ way to provide an updated model's fields to a consumer keeping the rest unchange
 
 ```ts
 class User extends Data {
-  name: string = 'Anonymous';
-  email: string = 'email@example.com';
+  name: string = "Anonymous";
+  email: string = "email@example.com";
 }
 
-let user = User.create({ name: 'Liza' });
+let user = User.create({ name: "Liza" });
 // > User { name: 'Liza', email: 'email@example.com' }
 
-let updated = user.copy({ email: 'liza@example.com' });
+let updated = user.copy({ email: "liza@example.com" });
 // > User { name: 'Liza', email: 'liza@example.com' }
 ```
 
@@ -97,12 +97,12 @@ actual values.
 ```ts
 class Box extends Data {
   size: number = 16;
-  color: string = 'red';
+  color: string = "red";
 }
 
-let first = Box.create({ color: 'green' });
-let second = Box.create({ color: 'blue' });
-let third = first.copy({ color: 'blue' });
+let first = Box.create({ color: "green" });
+let second = Box.create({ color: "blue" });
+let third = first.copy({ color: "blue" });
 
 first === second;
 // > false

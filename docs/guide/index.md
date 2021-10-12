@@ -31,11 +31,11 @@ from dataclasses import dataclass, replace
 
 @dataclass
 class User:
-  name: str = 'Anonymous'
+  name: str = "Anonymous"
   age: int = 0
 
-user = User(name='Liza', age=23)
-updated = replace(user, name='Ann')
+user = User(name="Liza", age=23)
+updated = replace(user, name="Ann")
 
 user == updated
 ```

@@ -1,16 +1,16 @@
-import copy from 'rollup-plugin-copy';
-import size from 'rollup-plugin-bundle-size';
+import copy from "rollup-plugin-copy";
+import size from "rollup-plugin-bundle-size";
 
 export default {
-  input: 'modules/Data.js',
-  output: [{ file: 'build/dataclass.js', format: 'cjs' }],
+  input: "modules/Data.js",
+  output: [{ file: "build/dataclass.js", format: "cjs" }],
   plugins: [
     copy({
       targets: [
-        { src: 'modules/Data.js', dest: 'build', rename: 'dataclass.module.js' },
-        { src: ['typings/*', 'LICENSE'], dest: 'build' },
-        { src: 'README_NPM.md', dest: 'build', rename: 'README.md' },
-        { src: 'package.json', dest: 'build', transform: generatePkg },
+        { src: "modules/Data.js", dest: "build", rename: "dataclass.module.js" },
+        { src: ["typings/*", "LICENSE"], dest: "build" },
+        { src: "README_NPM.md", dest: "build", rename: "README.md" },
+        { src: "package.json", dest: "build", transform: generatePkg },
       ],
     }),
     size(),

@@ -16,8 +16,8 @@ However, it can create additional burden for CommonJS code and require some unne
 the bundlers. Thus, Dataclass v2 uses named export.
 
 ```diff:no-line-numbers
--import Record from 'dataclass';
-+import { Data } from 'dataclass';
+-import Record from "dataclass";
++import { Data } from "dataclass";
 ```
 
 ## Drop TypeScript generic from class definitions
@@ -30,7 +30,7 @@ avoiding the issue in the first place. Now, the user's classes don't need to be 
 ```diff:no-line-numbers
 -class User extends Record<User> {
 +class User extends Data {
-  name: string = 'Anon';
+  name: string = "Anon";
 }
 ```
 
@@ -39,8 +39,8 @@ avoiding the issue in the first place. Now, the user's classes don't need to be 
 Dataclass v2 uses new implementation for class instantiation due to some browser incompatibilities.
 
 ```diff:no-line-numbers
--let user = new User({ name: 'Ann' });
-+let user = User.create({ name: 'Ann' });
+-let user = new User({ name: "Ann" });
++let user = User.create({ name: "Ann" });
 ```
 
 Moving to dataclass v2 will make use of `new` operator throwing runtime errors, suggesting to use

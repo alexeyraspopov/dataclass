@@ -6,7 +6,7 @@ The library is available [in NPM registry](https://www.npmjs.com/package/datacla
 installed via NPM or similar package manager:
 
 ```sh:no-line-numbers
-npm install dataclass@beta
+npm install dataclass
 ```
 
 ### Installing via CDNs
@@ -15,7 +15,7 @@ The library can be imported via [UNPKG](https://unpkg.com/). It is recommended t
 parameter to import ES Module version of the code:
 
 ```js:no-line-numbers
-import { Data } from 'https://unpkg.com/dataclass@beta?module';
+import { Data } from "https://unpkg.com/dataclass?module";
 ```
 
 _Note: the library does not support [UMD](https://github.com/umdjs/umd) format._
@@ -24,7 +24,7 @@ In similar way, the library can be imported via [esm.sh](http://esm.sh/). This c
 [Deno](https://deno.land/) since this CDN also serves `.d.ts` files.
 
 ```ts:no-line-numbers
-import { Data } from 'https://esm.sh/dataclass@beta';
+import { Data } from "https://esm.sh/dataclass";
 ```
 
 ## Troubleshooting

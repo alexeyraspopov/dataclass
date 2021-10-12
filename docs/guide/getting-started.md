@@ -3,7 +3,7 @@
 This library provides an abstract class `Data`:
 
 ```ts:no-line-numbers
-import { Data } from 'dataclass';
+import { Data } from "dataclass";
 ```
 
 Which allows to define custom data classes with their set of fields. Assuming, the user is aware of
@@ -18,7 +18,7 @@ types and default values:
 
 ```ts
 class User extends Data {
-  name: string = 'Anonymous';
+  name: string = "Anonymous";
   age: number = 0;
 }
 ```
@@ -27,11 +27,11 @@ Providing a set of fields defines the class' API. New entity is created by using
 `create()` provided by `Data`:
 
 ```ts
-let userWithCustomValues = User.create({ name: 'Liza', age: 23 });
-// > User { name: 'Liza', age: 23 }
+let userWithCustomValues = User.create({ name: "Liza", age: 23 });
+// > User { name: "Liza", age: 23 }
 
-let userWithDefaultValue = User.create({ name: 'Ann' });
-// > User { name: 'Ann', age: 0 }
+let userWithDefaultValue = User.create({ name: "Ann" });
+// > User { name: "Ann", age: 0 }
 ```
 
 The ability to use `new` operator is prohibited since `Data` needs access to all properties.
@@ -40,7 +40,7 @@ Created entity has all the fields' getters that return either custom or default 
 
 ```ts
 // custom value provided to constructor
-userWithCustomValues.name === 'Liza';
+userWithCustomValues.name === "Liza";
 
 // default value used from the model definition
 userWithDefaultValue.age === 0;
@@ -50,11 +50,11 @@ Whenever a change should be made, there is `copy()` method that has the same sig
 constructor, based on a fields definition:
 
 ```ts
-let user = User.create({ name: 'Ann' });
-// > User { name: 'Ann', age: 0 }
+let user = User.create({ name: "Ann" });
+// > User { name: "Ann", age: 0 }
 
 let updated = user.copy({ age: 28 });
-// > User { name: 'Ann', age: 28 }
+// > User { name: "Ann", age: 28 }
 ```
 
 This method returns a new entity built upon previous set of values. The target of `copy()` calls is
@@ -65,8 +65,8 @@ always give `false` as a result. To compare the actual properties of the same cl
 `equals()` method should be used:
 
 ```ts
-let userA = User.create({ name: 'Ann' });
-let userB = User.create({ name: 'Ann' });
+let userA = User.create({ name: "Ann" });
+let userB = User.create({ name: "Ann" });
 
 userA === userB;
 // > false
@@ -84,8 +84,8 @@ They can be easily described as plain class' methods:
 
 ```ts{6-8,10-12}
 class User extends Data {
-  firstName: string = 'John';
-  lastName: string = 'Doe';
+  firstName: string = "John";
+  lastName: string = "Doe";
   age: number = 0;
 
   isAdult() {
@@ -106,7 +106,7 @@ another value object. This library supports it seamlessly:
 
 ```ts{7}
 class Url extends Data {
-  protocol: string = 'https';
+  protocol: string = "https";
   hostname: string;
 }
 

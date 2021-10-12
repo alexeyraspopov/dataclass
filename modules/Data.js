@@ -1,5 +1,5 @@
-let GUARD = Symbol('Empty');
-let VALUES = Symbol('Values');
+let GUARD = Symbol("Empty");
+let VALUES = Symbol("Values");
 
 export class Data {
   static create(values = {}) {
