@@ -15,8 +15,7 @@ export class Data {
 
   copy(values) {
     let composed = Object.assign({}, this[VALUES], values);
-    let prototype = Object.getPrototypeOf(this);
-    return prototype.constructor.create(composed);
+    return this.constructor.create(composed);
   }
 
   equals(other) {
