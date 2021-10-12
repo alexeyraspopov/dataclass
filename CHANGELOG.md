@@ -13,6 +13,7 @@
 - **Breaking:** an attempt to mutate properties now throws runtime errors
 - **Breaking:** use named import instead of default `import { Data } from "dataclass"`
   - This should fix possible CJS/ESM compatibility issues and allow future API extensions
+- **Breaking:** explicit `toJSON()` implementation has been removed, _but the behavior is preserved_
 - **Breaking:** library code is no longer transpiled to ES5
   - Unless you support evergreen browsers, you still need to transpile TypeScript or class
     properties so the build step is inevitable. Thus, make sure `dataclass` is transpiled if

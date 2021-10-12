@@ -11,7 +11,7 @@ actions:
 features:
   - title: Lightweight
     details:
-      The library takes less than 600B in your bundle (min+gzip) while still providing a lot of
+      The library takes less than 500B in your bundle (min+gzip) while still providing a lot of
       flexibility and typings
   - title: Immutable
     details: The power of value objects is based on a simple convention that objects never mutate

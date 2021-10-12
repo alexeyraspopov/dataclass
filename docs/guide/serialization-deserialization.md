@@ -3,7 +3,7 @@
 In cases where the input data cannot be determined (API requests) or there should be some additional
 data preparation done, it is recommended to provide custom and agnostic static methods:
 
-```ts
+```ts{5-9}
 class User extends Data {
   name: string = 'Anonymous';
   age: number = 0;
@@ -41,5 +41,5 @@ JSON.stringify(user);
 // > { "name": "Liza", "age": 23 }
 ```
 
-By default, a model will be serialized to a plain object with all the fields as is, so there is no
-need to implement `toJSON()` from example above.
+By default, when using `JSON.stringify()`, a model will be serialized to a plain object with all the
+fields as is, so there is no need to implement `toJSON()` from example above.

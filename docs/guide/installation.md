@@ -55,6 +55,23 @@ Browserslist to figure what to transpile. Make sure you have `browserslist` prop
 Read more
 [in CRA docs](https://create-react-app.dev/docs/supported-browsers-features/#configuring-supported-browsers).
 
-### Using with Webpack
+### Using with Webpack & Babel
 
-Assuming the project uses Webpack and Babel. _TODO_
+It is very likely, that your webpack config excludes `node_modules` from running through
+`babel-loader` for the sake of faster builds. If any of your targeted environments require code
+transpiling to ES5 (e.g. Internet Explorer 11), the config will require some changes to make it work
+with `dataclass` (and possibly other dependencies that are published as a modern JS code).
+
+#### Explicit targets including approach
+
+The easiest way to extend your existing webpack config to transpile certain node_modules using
+`babel-loader` is to explicitly mention them in `include` property corresponding rule.
+
+_Note: this change can be applied to production config only._
+
+#### Basic dependencies transpiling approach
+
+While the previous approach easily works for `dataclass` and in no way affects the build time, there
+is another approach you may consider, that will potentially help you with other dependecies.
+
+_Note: this change can be applied to production config only._

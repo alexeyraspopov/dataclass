@@ -43,13 +43,16 @@ Dataclass v2 uses new implementation for class instantiation due to some browser
 +let user = User.create({ name: 'Ann' });
 ```
 
+Moving to dataclass v2 will make use of `new` operator throwing runtime errors, suggesting to use
+static `create()` method instead.
+
 ## Ensure no mutations happening in the code
 
 While instance of data classes treated as immutable, the implementation still uses some safety
 precautions to ensure no mutations (accidental or intentional) can be made. In v1, when a prop is
 mutated, nothing happens, the value remains the same. The operation is basically ignored.
 
-```ts:no-line-numbers
+```ts:no-line-numbers{3}
 let user = new User({ age: 18 });
 
 user.age = 100;
@@ -61,7 +64,7 @@ console.log(user.age);
 In v2, however, some additional precautions were made, to ensure that developers can spot bad code
 and mistakes. Mutating a property will now throw an error:
 
-```ts:no-line-numbers
+```ts:no-line-numbers{3}
 let user = new User({ age: 18 });
 
 user.age = 100;
