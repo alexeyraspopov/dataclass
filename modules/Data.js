@@ -24,16 +24,17 @@ export class Data {
     let vb = other[VALUES];
 
     for (let key in this) {
-      let hasA = va.hasOwnProperty(key);
-      let hasB = vb.hasOwnProperty(key);
+      let hasA = key in va;
+      let hasB = key in vb;
       if (hasA || hasB) {
         let a = hasA ? va[key] : this[key];
         let b = hasB ? vb[key] : other[key];
         if (a !== b) {
           if (a != null && b != null) {
             if (a instanceof Data && b instanceof Data && a.equals(b)) continue;
-            if (a.valueOf() !== b.valueOf()) return false;
-          } else return false;
+            if (a.valueOf() === b.valueOf()) continue;
+          }
+          return false;
         }
       }
     }
