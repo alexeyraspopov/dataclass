@@ -44,11 +44,6 @@ export class Data {
   }
 
   toJSON() {
-    let result = {};
-    for (let key in this) {
-      let value = this[key];
-      result[key] = callable(value, 'toJSON') ? value.toJSON() : value;
-    }
-    return result;
+    return Object.assign({}, this);
   }
 }

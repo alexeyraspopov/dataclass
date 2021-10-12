@@ -27,7 +27,7 @@ describe('Data', () => {
   it('should override defaults with custom values', () => {
     let entity = Entity.create({ someNullable: 1, someString: 'hello' });
 
-    expect(entity.toJSON()).toEqual({
+    expect(entity).toEqual({
       someString: 'hello',
       someNum: 0.134,
       someBool: true,
@@ -40,6 +40,7 @@ describe('Data', () => {
     let left = entity.copy({ someNum: 13, someBool: false });
     let right = entity.copy({ someNum: 13 }).copy({ someBool: false });
 
+    expect(left).toEqual(right);
     expect(left.toJSON()).toEqual(right.toJSON());
   });
 
@@ -51,7 +52,7 @@ describe('Data', () => {
     let entityA = SubEntity.create();
     let entityB = SubEntity.create({ someString: 'test', someNewThing: 'blah' });
 
-    expect(entityA.toJSON()).toEqual({
+    expect(entityA).toEqual({
       someString: 'default string',
       someNum: 0.134,
       someBool: true,
@@ -59,7 +60,7 @@ describe('Data', () => {
       someNewThing: 'default',
     });
 
-    expect(entityB.toJSON()).toEqual({
+    expect(entityB).toEqual({
       someString: 'test',
       someNum: 0.134,
       someBool: true,
@@ -94,14 +95,14 @@ describe('Data', () => {
     let entity = Entity.create({ someBool: false });
     let updated = entity.copy({ someNum: 14 });
 
-    expect(entity.toJSON()).toEqual({
+    expect(entity).toEqual({
       someString: 'default string',
       someNum: 0.134,
       someBool: false,
       someNullable: null,
     });
 
-    expect(updated.toJSON()).toEqual({
+    expect(updated).toEqual({
       someString: 'default string',
       someNum: 14,
       someBool: false,
@@ -202,18 +203,6 @@ describe('Data', () => {
     expect(a.equals(b)).toBe(true);
     expect(b.equals(c)).toBe(true);
     expect(a.equals(c)).toBe(true);
-  });
-
-  it('should be serializable', () => {
-    let entity = Entity.create({ someBool: false });
-    let raw = {
-      someString: 'default string',
-      someNum: 0.134,
-      someBool: false,
-      someNullable: null,
-    };
-
-    expect(JSON.stringify(entity)).toBe(JSON.stringify(raw));
   });
 
   it('should support iterables', () => {
