@@ -1,6 +1,6 @@
 # Introduction
 
-    npm install dataclass@beta
+    npm install dataclass
 
 Syntax sugar that leverages the power of available type systems in TypeScript and JavaScript to
 provide an effortless way for defining value objects that are immutable and persistent.
