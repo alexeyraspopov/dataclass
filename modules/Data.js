@@ -5,6 +5,7 @@ export class Data {
   static create(values = {}) {
     let data = new this(GUARD);
     Object.defineProperty(data, VALUES, { value: values });
+    Object.seal(data);
     Object.assign(data, values);
     return Object.freeze(data);
   }

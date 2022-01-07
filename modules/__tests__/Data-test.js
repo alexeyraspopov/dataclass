@@ -234,6 +234,16 @@ describe("Data", () => {
     }).toThrow(/Cannot add property/);
   });
 
+  it("should prohibit new properties", () => {
+    expect(() => {
+      Entity.create({ thisShouldNotBeHere: 1 });
+    }).toThrow(/object is not extensible/);
+
+    expect(() => {
+      Entity.create().copy({ thisShouldNotBeHere: 1 });
+    }).toThrow(/object is not extensible/);
+  });
+
   it("should support predefined getters", () => {
     let entity = Entity.create({ someString: "abcde" });
 
