@@ -15,7 +15,7 @@ The library can be imported via [UNPKG](https://unpkg.com/). It is recommended t
 parameter to import ES Module version of the code:
 
 ```js:no-line-numbers
-import { Data } from "https://unpkg.com/dataclass?module";
+import { Data } from "https://unpkg.com/dataclass@2?module";
 ```
 
 _Note: the library does not support [UMD](https://github.com/umdjs/umd) format._
@@ -24,8 +24,10 @@ In similar way, the library can be imported via [esm.sh](http://esm.sh/). This c
 [Deno](https://deno.land/) since this CDN also serves `.d.ts` files.
 
 ```ts:no-line-numbers
-import { Data } from "https://esm.sh/dataclass";
+import { Data } from "https://esm.sh/dataclass@2";
 ```
+
+_Note: it is preferable to put explicit version range in the URL._
 
 ## Troubleshooting
 
