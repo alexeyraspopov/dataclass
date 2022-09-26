@@ -25,13 +25,13 @@ describe("Data", () => {
   });
 
   it("should override defaults with custom values", () => {
-    let entity = Entity.create({ someNullable: 1, someString: "hello" });
+    let entity = Entity.create({ someNullable: "1", someString: "hello" });
 
     expect(entity).toEqual({
       someString: "hello",
       someNum: 0.134,
       someBool: true,
-      someNullable: 1,
+      someNullable: "1",
     });
   });
 
@@ -87,8 +87,8 @@ describe("Data", () => {
     let baseEntity = Base.create({ format: "AAAAA" });
     let childEntity = Child.create();
 
-    expect(baseEntity.transform(1)).toBe("11111");
-    expect(childEntity.transform(1)).toBe("-111");
+    expect(baseEntity.transform("1")).toBe("11111");
+    expect(childEntity.transform("1")).toBe("-111");
   });
 
   it("should create new entity based on existent", () => {
@@ -114,7 +114,7 @@ describe("Data", () => {
     let entityA = Entity.create({ someBool: false, someNullable: null });
     let equal = Entity.create({ someBool: false, someNum: 0.134 });
     let unequal = Entity.create({ someBool: false, someNullable: undefined });
-    let entityB = Entity.create({ someNullable: 1 });
+    let entityB = Entity.create({ someNullable: "1" });
     let entityC = Entity.create({ someNullable: null });
     let extended = entityB.copy({ someBool: true });
     let updated = entityA.copy({ someNum: 14 });
@@ -130,16 +130,14 @@ describe("Data", () => {
   class Embedded extends Data {
     name: string = "name";
     age: number = 1;
-    entity: Entity = Entity.create();
+    entity: ?Entity = Entity.create();
     date: Date = new Date();
     obj: Object = { foo: "bar" };
   }
 
   it("should be serializable with embedded dataclass", () => {
     let dummyDate = new Date("1996-12-17T03:24:00");
-    let embedded = Embedded.create({
-      date: dummyDate,
-    });
+    let embedded = Embedded.create({ date: dummyDate });
     let raw = {
       name: "name",
       age: 1,
@@ -161,10 +159,12 @@ describe("Data", () => {
     let embeddedA = Embedded.create({
       date: new Date("1996-12-17T03:24:00"),
       entity: Entity.create({ someBool: false }),
+      obj: null,
     });
     let embeddedB = Embedded.create({
       date: new Date("1996-12-17T03:24:00"),
       entity: Entity.create({ someBool: false }),
+      obj: null,
     });
     let embeddedC = Embedded.create({
       date: new Date("1996-12-17T03:24:00"),
@@ -226,20 +226,27 @@ describe("Data", () => {
     expect(Object.isFrozen(entity)).toBe(true);
 
     expect(() => {
-      entity.someBool = null;
+      entity.someBool = true;
     }).toThrow(/Cannot assign/);
 
     expect(() => {
+      // $FlowFixMe intentional addition of inexistent property to assert runtime error
       entity.somethingElse = null;
     }).toThrow(/Cannot add property/);
   });
 
   it("should prohibit new properties", () => {
+    let entity = Entity.create({ someBool: false });
+
+    expect(Object.isSealed(entity)).toBe(true);
+
     expect(() => {
+      // $FlowFixMe intentional addition of inexistent property to assert runtime error
       Entity.create({ thisShouldNotBeHere: 1 });
     }).toThrow(/object is not extensible/);
 
     expect(() => {
+      // $FlowFixMe intentional addition of inexistent property to assert runtime error
       Entity.create().copy({ thisShouldNotBeHere: 1 });
     }).toThrow(/object is not extensible/);
   });
@@ -254,5 +261,17 @@ describe("Data", () => {
     expect(() => {
       new Entity();
     }).toThrow(/Use Entity.create/);
+  });
+
+  it("should allow dynamic defaults per instance", () => {
+    class Ent extends Data {
+      id: string = Math.random().toString(16).slice(2, 8);
+    }
+    let a1 = Ent.create();
+    let a2 = a1.copy();
+    let b = Ent.create();
+    expect(a1.equals(a2)).toBe(true);
+    expect(b.equals(a1)).toBe(false);
+    expect(b.equals(a2)).toBe(false);
   });
 });
