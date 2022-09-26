@@ -1,4 +1,7 @@
-module.exports = {
+import { defaultTheme, viteBundler } from "vuepress";
+import { searchPlugin } from "@vuepress/plugin-search";
+
+export default {
   title: "dataclass",
 
   head: [
@@ -10,24 +13,14 @@ module.exports = {
     ["meta", { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" }],
   ],
 
-  theme: "@vuepress/theme-default",
-  bundler: "@vuepress/bundler-vite",
-  plugins: ["@vuepress/plugin-search"],
-
-  themeConfig: {
+  theme: defaultTheme({
     repo: "alexeyraspopov/dataclass",
     docsBranch: "master",
     docsDir: "docs",
 
     navbar: [
-      {
-        text: "Guide",
-        link: "/guide/",
-      },
-      {
-        text: "Reference",
-        link: "/reference/",
-      },
+      { text: "Guide", link: "/guide/" },
+      { text: "Reference", link: "/reference/" },
     ],
 
     sidebar: {
@@ -52,5 +45,7 @@ module.exports = {
         },
       ],
     },
-  },
+  }),
+  bundler: viteBundler(),
+  plugins: [searchPlugin()],
 };
