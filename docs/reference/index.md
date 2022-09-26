@@ -14,7 +14,7 @@ class Project extends Data {
   id: string = "";
   name: string = "Untitled Project";
   createdBy: string = "";
-  createdAt: Date = null;
+  createdAt: Date | null = null;
 }
 ```
 
@@ -37,8 +37,8 @@ object. Properties are read only.
 
 ```ts
 class Vehicle extends Data {
-  model: string = "";
-  manufacturer: string = "";
+  model: string = "Unspecified";
+  manufacturer: string = "Unknown";
 }
 
 let vehicle = Vehicle.create({ manufacturer: "Tesla", model: "S" });
@@ -67,11 +67,11 @@ way to provide an updated model's fields to a consumer keeping the rest unchange
 ```ts
 class User extends Data {
   name: string = "Anonymous";
-  email: string = "email@example.com";
+  email: string | null = null;
 }
 
 let user = User.create({ name: "Liza" });
-// > User { name: 'Liza', email: 'email@example.com' }
+// > User { name: 'Liza', email: null }
 
 let updated = user.copy({ email: "liza@example.com" });
 // > User { name: 'Liza', email: 'liza@example.com' }

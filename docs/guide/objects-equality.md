@@ -9,9 +9,9 @@ Let's consider an example:
 import { Data } from "dataclass";
 
 class Circle extends Data {
-	x: number = 0;
-	y: number = 0;
-	radius: number = 0;
+  x: number = 0;
+  y: number = 0;
+  radius: number = 0;
 }
 
 let circleA = Circle.create({ x: 0, y: 10, radius: 2 });
@@ -26,20 +26,17 @@ This guide describes what happens when `target.equals(other)` is being called.
 1. The runtime does not check `other` for being the same data class as `target`. This is what
    supposed to be checked by the typing system (TypeScript or Flowtype) even before the code is
    executed.
-2. The `equals()` method iterates over the properties of the `target` class and checks whether
-   `target` or `other` has a custom value for the key. If at least on of them does, the values need
-   to be compared.
-3. If `target` has a custom value for a property, but `other` does not, the default value of the
-   class will be compared to the custom value
-4. If two values are not strictly equal (via `===` comparison), and both of the values are not
+2. The `equals()` method iterates over the properties of the `target` class and compares the values
+   to the same keys in `other` instance.
+3. If two values are not strictly equal (via `===` comparison), and both of the values are not
    nullish (i.e. neither `undefined` nor `null`), the method checks whether these values are data
    classes that also have `equals()` method. If so, the rest of comparison for these two values is
    delegated to their `equals()` method.
-5. If the values are not data classes, `.valueOf()` method is used for both values to extract
+4. If the values are not data classes, `.valueOf()` method is used for both values to extract
    possible primitive representation. The resulting values are compared using `===` operator. If
    result is `false`, `equals()` method returns `false` and skip comparing the rest of the
    properties.
-6. If none of changed properties are different in both `target` and `other`, `equals()` method
+5. If none of changed properties are different in both `target` and `other`, `equals()` method
    returns `true`.
 
 The idea behind this algorithm attempts to find `equals()` of a dataclass properties is that you can
