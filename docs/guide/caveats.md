@@ -73,3 +73,20 @@ let entity = Entity.create();
 let payload = JSON.stringify(entity);
 // > { "optionalProp": null }
 ```
+
+## Explicit `this` signature in methods
+
+When using TypeScript, whenever a data class contains a method, that uses `this.copy()` or
+`this.equals()`, you may see a typing error. But you have done nothing wrong. There are some
+limitations in TypeScript or this library's typings, but that's something you can easily fix:
+
+```ts{4-5}
+class Entity extends Data {
+  counter: number = 13;
+
+  // set explicit this type to a method that uses other data class methods
+  increment(this: Entity) {
+    return this.copy({ counter: this.counter + 1 })
+  }
+}
+```
