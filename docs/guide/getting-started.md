@@ -1,5 +1,7 @@
 # Getting Started
 
+## Defining data classes
+
 This library provides an abstract class `Data`:
 
 ```ts:no-line-numbers
@@ -23,8 +25,11 @@ class User extends Data {
 }
 ```
 
-Providing a set of fields defines the class' API. New entity is created by using static method
-`create()` provided by `Data`:
+Providing a set of fields defines the class' API.
+
+## Creating data objects and accessing properties
+
+New entity is created by using static method `create()` provided by `Data`:
 
 ```ts
 let userWithCustomValues = User.create({ name: "Liza", age: 23 });
@@ -34,7 +39,8 @@ let userWithDefaultValue = User.create({ name: "Ann" });
 // > User { name: "Ann", age: 0 }
 ```
 
-The ability to use `new` operator is prohibited since `Data` needs access to all properties.
+**Warning**: the ability to use `new` operator is prohibited since `Data` needs access to all
+properties.
 
 Created entity has all the fields' getters that return either custom or default value:
 
@@ -45,6 +51,8 @@ userWithCustomValues.name === "Liza";
 // default value used from the model definition
 userWithDefaultValue.age === 0;
 ```
+
+## Making changes in data objects
 
 Whenever a change should be made, there is `copy()` method that has the same signature as
 constructor, based on a fields definition:
@@ -59,6 +67,8 @@ let updated = user.copy({ age: 28 });
 
 This method returns a new entity built upon previous set of values. The target of `copy()` calls is
 not changed, by the definition of persistence.
+
+## Comparing data objects by value
 
 Since all the entities of one class are unique by their object reference, comparison operator will
 always give `false` as a result. To compare the actual properties of the same class' entities,
@@ -77,7 +87,7 @@ userA.equals(userB);
 
 All the API is fully compatible, so the code looks the same in JavaScript and TypeScript.
 
-<!-- TODO mention class properties -->
+## Going beyond properties
 
 Often, models may have a set of additional getters that represent computed values based on raw data.
 They can be easily described as plain class' methods:
@@ -101,6 +111,8 @@ class User extends Data {
 Getters may receive arguments, however it is recommended to keep them primitive, so a model
 [won't know](https://en.wikipedia.org/wiki/Law_of_Demeter) about some others' internals.
 
+## Nested data objects
+
 When you're modeling complex domains, you may find the need to have one value object as a part of
 another value object. This library supports it seamlessly:
 
@@ -114,3 +126,25 @@ class Server extends Data {
   location: Url;
 }
 ```
+
+## Dynamic values as defaults
+
+Default values of data class properties must be useful. JavaScript provides an ability to use any
+expression as a value of class property, and so `dataclass` allows you to leverage this for good.
+
+```ts
+import { v4 as uuidv4 } from "uuid";
+
+class Entity extends Data {
+  id: string = uuidv4();
+}
+
+let entityA = Entity.create();
+// > Entity { id: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d' }
+
+let entityB = Entity.create();
+// > Entity { id: '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed' }
+```
+
+**Note**: make sure to use `dataclass` version 2.1.0 or higher to avoid some old bugs related to
+dynamic defaults.
