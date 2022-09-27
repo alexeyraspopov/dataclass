@@ -33,6 +33,7 @@ export default {
             "/guide/getting-started.md",
             "/guide/objects-equality.md",
             "/guide/serialization-deserialization.md",
+            "/guide/caveats.md",
             "/guide/migrating.md",
             "/guide/contributing.md",
           ],
