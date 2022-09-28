@@ -31,6 +31,64 @@ console.log(user === updated, user.equals(updated));
 // > false, true
 ```
 
+## Quick Start
+
+1. **Define data class** — use language features to define the data schema and default values
+
+```ts:no-line-numbers
+class Task extends Data {
+  contents: string = "";
+  completed: boolean = false;
+  priority: number = 1;
+}
+```
+
+2. **Create data objects** — create immutable instance with custom values, fallback to defaults if
+   necessary
+
+```ts:no-line-numbers
+let taskA = Task.create({
+  contents: "Upgrade dependencies",
+});
+// > Task { contents: "Upgrade dependencies", completed: false, priority: 1 }
+
+let taskB = Task.create({
+  contents: "Provide work summary",
+  priority: 2,
+});
+// > Task { contents: "Provide work summary", completed: false, priority: 2 }
+```
+
+3. **Read values** — data objects behave just like any other objects, read the properties you
+   defined before
+
+```ts:no-line-numbers
+let tasks: Array<Task> = [
+  /* some Task data objects */
+];
+tasks.sort((a, b) => (a.priority > b.priority ? -1 : 1));
+```
+
+4. **Make copies** — whenever a change is needed, make a copy data object with the new values
+
+```ts:no-line-numbers
+function markCompleted(task: Task) {
+  return task.copy({ completed: true });
+}
+```
+
+5. **Compare by values** — compare data objects by their value instead of immutable reference
+
+```ts:no-line-numbers
+function isTicketChanged(prev: Task, next: Task) {
+  return !prev.equals(next);
+}
+```
+
+6. Read more in [Getting Started](./getting-started.md) guide, or see deep dive explanation of
+   different aspects: [value object equality](./objects-equality.md),
+   [serialization/deserialization](./serialization-deserialization.md).
+
 ## Prior Art
 
 The implemented concept is heavily inspired by Scala and Kotlin. Both languages have the

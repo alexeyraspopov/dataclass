@@ -89,4 +89,10 @@ class Entity extends Data {
     return this.copy({ counter: this.counter + 1 })
   }
 }
+
+let entity = Entity.create({ counter: 10 });
+// > Entity { counter: 10 }
+
+let updated = entity.increment();
+// > Entity { counter: 11 }
 ```
