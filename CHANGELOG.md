@@ -1,5 +1,17 @@
 # Changelog
 
+## [`v2.1.0`](https://github.com/alexeyraspopov/dataclass/releases/tag/v2.1.0)
+
+- Data instances are now sealed. Adding extra keys via `create()` or `copy()` will result in runtime
+  error. If type system is properly utilized, this should not create any issues to existing code.
+- Fully rewritten instantiation and copy algorithms with backward compatibility. New implementation
+  consumes less memory and uses faster approach in copying objects.
+- Fixed dynamic defaults being re-generated after `copy()`
+- `copy()` methods now both can omit the argument, creating a referential copy of the instance.
+- `equals()` now compares all keys (previously it was checking only the ones overriding defaults).
+  The assumed optimizaiton in time didn't pay out and only caused unnecessary complication to
+  copying mechanism and higher memory consumtion.
+
 ## [`v2.0.0`](https://github.com/alexeyraspopov/dataclass/releases/tag/v2.0.0)
 
 - Dataclass is now licensed under [ISC License](https://en.wikipedia.org/wiki/ISC_license)  
