@@ -1,5 +1,11 @@
 # Changelog
 
+## [`v2.1.1`](https://github.com/alexeyraspopov/dataclass/releases/tag/v2.1.1)
+
+- TypeScript typings fix: omit `Data` base class keys in `create()` and `copy()` signatures. Not a
+  breaking change since attempt to override these keys would lead to runtime error already. Mainly
+  affects autocomplete function of your editor, only showing the keys that can be updated.
+
 ## [`v2.1.0`](https://github.com/alexeyraspopov/dataclass/releases/tag/v2.1.0)
 
 - Data instances are now sealed. Adding extra keys via `create()` or `copy()` will result in runtime
