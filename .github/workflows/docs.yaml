@@ -2,7 +2,7 @@ name: Docs
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -13,14 +13,14 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
       - name: Install docs-related dependencies
         run: cd docs && npm install && npm run build && cd ..
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
-          build_dir: docs/.vuepress/dist
+          build_dir: docs/.vitepress/dist
           fqdn: dataclass.js.org
           verbose: true
         env:
